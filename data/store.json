@@ -1,0 +1,14 @@
+{
+  "projects": [],
+  "resume": null,
+  "admins": [
+    {
+      "_id": "admin-1788942589221",
+      "id": "admin-1788942589221",
+      "email": "sikandarswami91@gmail.com",
+      "password": "$2b$10$GOT4nlBaJqEyxUGxI43rEOnsW1XZid5WhGsEkPmWInsHYkH5K4nfa",
+      "createdAt": "2026-09-09T08:29:49.221Z",
+      "updatedAt": "2026-09-09T08:29:49.221Z"
+    }
+  ]
+}
