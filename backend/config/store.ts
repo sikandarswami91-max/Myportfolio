@@ -37,13 +37,6 @@ const persistLocalStore = () => {
       fs.mkdirSync(primaryDir, { recursive: true });
     }
     fs.writeFileSync(path.join(primaryDir, 'store.json'), payload);
-
-    // Also mirror to root data/store.json for legacy path compatibility
-    const fallbackDir = path.join(process.cwd(), 'data');
-    if (!fs.existsSync(fallbackDir)) {
-      fs.mkdirSync(fallbackDir, { recursive: true });
-    }
-    fs.writeFileSync(path.join(fallbackDir, 'store.json'), payload);
   } catch (err) {
     // Non-fatal
   }

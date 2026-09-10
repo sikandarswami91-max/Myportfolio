@@ -27,10 +27,8 @@ export const downloadResumeFile = async (req: Request, res: Response): Promise<v
       }
     }
 
-    // Local static file
-    const localPdfPath = fs.existsSync(path.join(process.cwd(), 'frontend', 'public', 'resume.pdf'))
-      ? path.join(process.cwd(), 'frontend', 'public', 'resume.pdf')
-      : path.join(process.cwd(), 'public', 'resume.pdf');
+    // Local static file in public directory
+    const localPdfPath = path.join(process.cwd(), 'public', 'resume.pdf');
     if (fs.existsSync(localPdfPath)) {
       const stat = fs.statSync(localPdfPath);
       res.setHeader('Content-Disposition', `attachment; filename="${fileName}"; filename*=UTF-8''${encodeURIComponent(fileName)}`);

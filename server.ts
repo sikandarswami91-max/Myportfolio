@@ -62,9 +62,9 @@ async function startServer() {
   app.use(express.json({ limit: '20mb' }));
   app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
-  // Static assets from public folder
-  app.use(express.static(path.join(process.cwd(), 'public')));
+  // Static assets from frontend/public and public folder
   app.use(express.static(path.join(process.cwd(), 'frontend', 'public')));
+  app.use(express.static(path.join(process.cwd(), 'public')));
 
   // Initialize DB & Data Seed
   await connectDB();
@@ -95,6 +95,7 @@ async function startServer() {
   // Vite middleware for development vs static build in production
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
+      root: path.resolve(__dirname, 'frontend'),
       server: { middlewareMode: true },
       appType: 'spa',
     });
