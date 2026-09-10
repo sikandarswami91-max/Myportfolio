@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, Download, Terminal, Sparkles, CheckCircle2, Code, Database, Server, Cpu } from 'lucide-react';
+import { ArrowRight, Download, Github, Terminal, Sparkles, CheckCircle2, Code, Database, Server, Cpu } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ThemeMode } from '../types';
 import { downloadResumeFile } from '../utils/downloadResume';
@@ -56,7 +56,14 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
             className="lg:col-span-7 flex flex-col items-start text-left z-10"
           >
             {/* Status Pill */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border mb-6 text-xs font-medium backdrop-blur-md shadow-sm transition-colors border-neutral-200/80 bg-neutral-100/70 text-neutral-800 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300">
+            <motion.div
+              variants={itemVariants}
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border mb-6 text-xs font-medium backdrop-blur-md shadow-sm transition-colors ${
+                isDark
+                  ? 'border-neutral-700 bg-neutral-900/80 text-[#E2E8F0]'
+                  : 'border-neutral-200/80 bg-neutral-100/70 text-neutral-800'
+              }`}
+            >
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>Available for MERN Developer Roles & Internships</span>
             </motion.div>
@@ -64,7 +71,9 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
             {/* Greeting */}
             <motion.p
               variants={itemVariants}
-              className="text-lg sm:text-xl font-medium text-cyan-600 dark:text-cyan-400 mb-2 tracking-wide"
+              className={`text-lg sm:text-xl font-semibold mb-2 tracking-wide ${
+                isDark ? 'text-cyan-400' : 'text-cyan-600'
+              }`}
             >
               Hi, I'm Sikandar
             </motion.p>
@@ -72,10 +81,12 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
             {/* Main Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-6xl xl:text-7xl font-extrabold font-heading tracking-tight leading-[1.08] text-neutral-900 dark:text-white mb-6"
+              className={`text-4xl sm:text-6xl xl:text-7xl font-extrabold font-heading tracking-tight leading-[1.08] mb-6 ${
+                isDark ? 'text-white' : 'text-neutral-900'
+              }`}
             >
               MERN Stack{' '}
-              <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent drop-shadow-sm">
                 Developer
               </span>
             </motion.h1>
@@ -83,7 +94,9 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
             {/* Description */}
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg lg:text-xl text-neutral-600 dark:text-neutral-300 max-w-2xl leading-relaxed mb-8"
+              className={`text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed mb-8 ${
+                isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+              }`}
             >
               {PERSONAL_INFO.tagline}
             </motion.p>
@@ -116,41 +129,74 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
                 whileTap={{ scale: 0.97 }}
                 className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm border transition-all cursor-pointer ${
                   isDark
-                    ? 'border-neutral-700 bg-neutral-900/80 text-neutral-200 hover:bg-neutral-800 hover:border-neutral-600'
+                    ? 'border-neutral-700 bg-neutral-900/80 text-[#E2E8F0] hover:bg-neutral-800 hover:border-neutral-600'
                     : 'border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-400 shadow-sm'
                 }`}
               >
                 <Download className="w-4 h-4 text-cyan-500" />
                 <span>Download Resume</span>
               </motion.a>
+
+              <motion.a
+                id="hero-github-btn"
+                href={PERSONAL_INFO.github}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold text-sm border transition-all cursor-pointer ${
+                  isDark
+                    ? 'border-neutral-700 bg-neutral-900/80 text-[#E2E8F0] hover:bg-neutral-800 hover:text-white hover:border-neutral-600'
+                    : 'border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 hover:text-black hover:border-neutral-400 shadow-sm'
+                }`}
+                title="GitHub Profile (sikandarswami91-max)"
+                aria-label="GitHub Profile"
+              >
+                <Github className="w-4 h-4 text-cyan-500" />
+                <span>GitHub</span>
+              </motion.a>
             </motion.div>
 
             {/* Quick Metrics Strip */}
             <motion.div
               variants={itemVariants}
-              className="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800/80 grid grid-cols-3 gap-6 sm:gap-10"
+              className={`mt-12 pt-8 border-t grid grid-cols-3 gap-6 sm:gap-10 ${
+                isDark ? 'border-neutral-800' : 'border-neutral-200'
+              }`}
             >
               <div>
-                <div className="text-2xl sm:text-3xl font-bold font-heading text-neutral-900 dark:text-white">
+                <div className={`text-2xl sm:text-3xl font-bold font-heading ${
+                  isDark ? 'text-white' : 'text-neutral-900'
+                }`}>
                   6+ <span className="text-cyan-500 text-lg sm:text-xl font-sans">Mo</span>
                 </div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                <div className={`text-xs mt-0.5 ${
+                  isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                }`}>
                   V MART Experience
                 </div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold font-heading text-neutral-900 dark:text-white">
+                <div className={`text-2xl sm:text-3xl font-bold font-heading ${
+                  isDark ? 'text-white' : 'text-neutral-900'
+                }`}>
                   10+ <span className="text-blue-500 text-lg sm:text-xl font-sans">Apps</span>
                 </div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                <div className={`text-xs mt-0.5 font-medium ${
+                  isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+                }`}>
                   Full-Stack Builds
                 </div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold font-heading text-neutral-900 dark:text-white">
+                <div className={`text-2xl sm:text-3xl font-bold font-heading ${
+                  isDark ? 'text-white' : 'text-neutral-900'
+                }`}>
                   BCA <span className="text-indigo-500 text-xs sm:text-sm font-mono">2026</span>
                 </div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                <div className={`text-xs mt-0.5 font-medium ${
+                  isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+                }`}>
                   Semester VI Scholar
                 </div>
               </div>
@@ -181,7 +227,7 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
                   <span className="w-3 h-3 rounded-full bg-rose-500/80" />
                   <span className="w-3 h-3 rounded-full bg-amber-500/80" />
                   <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 text-xs font-mono text-neutral-400">
+                  <span className="ml-2 text-xs font-mono text-neutral-500 dark:text-neutral-300">
                     sikandar.dev.tsx
                   </span>
                 </div>
@@ -192,7 +238,7 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
 
               {/* Code Snippet Display */}
               <div className="font-mono text-xs leading-relaxed space-y-1.5 overflow-hidden">
-                <div className="text-neutral-500 dark:text-neutral-400">
+                <div className={isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'}>
                   // Candidate Profile & Technical Stack
                 </div>
                 <div>
@@ -200,47 +246,49 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
                   <span className="text-blue-600 dark:text-blue-400">developer</span> = {'{'}
                 </div>
                 <div className="pl-4">
-                  <span className="text-neutral-700 dark:text-neutral-300">name:</span>{' '}
+                  <span className={isDark ? 'text-[#E2E8F0]' : 'text-neutral-700'}>name:</span>{' '}
                   <span className="text-emerald-600 dark:text-emerald-400">'Sikandar'</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-neutral-700 dark:text-neutral-300">role:</span>{' '}
+                  <span className={isDark ? 'text-[#E2E8F0]' : 'text-neutral-700'}>role:</span>{' '}
                   <span className="text-emerald-600 dark:text-emerald-400">'MERN Stack Developer'</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-neutral-700 dark:text-neutral-300">education:</span>{' '}
+                  <span className={isDark ? 'text-[#E2E8F0]' : 'text-neutral-700'}>education:</span>{' '}
                   <span className="text-emerald-600 dark:text-emerald-400">'BCA Semester VI (2025-26)'</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-neutral-700 dark:text-neutral-300">stack:</span> [
+                  <span className={isDark ? 'text-[#E2E8F0]' : 'text-neutral-700'}>stack:</span> [
                   <span className="text-amber-600 dark:text-amber-400">'MongoDB'</span>,{' '}
                   <span className="text-amber-600 dark:text-amber-400">'Express'</span>,{' '}
                   <span className="text-amber-600 dark:text-amber-400">'React'</span>,{' '}
                   <span className="text-amber-600 dark:text-amber-400">'Node.js'</span>],
                 </div>
                 <div className="pl-4">
-                  <span className="text-neutral-700 dark:text-neutral-300">passionate:</span>{' '}
+                  <span className={isDark ? 'text-[#E2E8F0]' : 'text-neutral-700'}>passionate:</span>{' '}
                   <span className="text-cyan-600 dark:text-cyan-400">true</span>,
                 </div>
-                <div>{'}'};</div>
+                <div className={isDark ? 'text-white' : 'text-neutral-900'}>{'}'};</div>
 
-                <div className="pt-2 text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
+                <div className={`pt-2 flex items-center gap-1.5 ${isDark ? 'text-cyan-300' : 'text-cyan-600'}`}>
                   <span className="animate-pulse">▶</span>
                   <span className="text-[11px]">Ready to build production-grade web systems.</span>
                 </div>
               </div>
 
               {/* Developer Profile Badge bar */}
-              <div className="mt-5 pt-4 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+              <div className={`mt-5 pt-4 border-t flex items-center justify-between ${
+                isDark ? 'border-neutral-800' : 'border-neutral-200'
+              }`}>
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
                     S
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-neutral-900 dark:text-white">
+                    <div className={`text-xs font-bold ${isDark ? 'text-white' : 'text-neutral-900'}`}>
                       Sikandar
                     </div>
-                    <div className="text-[10px] text-neutral-500 dark:text-neutral-400">
+                    <div className={`text-[10px] ${isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'}`}>
                       BCA Web Engineer
                     </div>
                   </div>

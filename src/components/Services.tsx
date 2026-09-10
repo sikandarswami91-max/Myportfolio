@@ -34,10 +34,14 @@ export const Services: React.FC<ServicesProps> = ({ theme, onContactClick }) => 
             <Sparkles className="w-3.5 h-3.5" />
             <span>Core Offerings</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-neutral-900 dark:text-white tracking-tight">
+          <h2 className={`text-3xl sm:text-5xl font-extrabold font-heading tracking-tight ${
+            isDark ? 'text-white' : 'text-neutral-900'
+          }`}>
             What I Can Do
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-300">
+          <p className={`mt-4 text-base sm:text-lg ${
+            isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+          }`}>
             Delivering high-end digital solutions, from responsive client interfaces to secure end-to-end full stack web platforms.
           </p>
         </motion.div>
@@ -57,7 +61,7 @@ export const Services: React.FC<ServicesProps> = ({ theme, onContactClick }) => 
                 whileHover={{ y: -6 }}
                 className={`p-7 sm:p-8 rounded-2xl border transition-all duration-300 flex flex-col justify-between relative group ${
                   isDark
-                    ? 'bg-neutral-900/70 border-neutral-800 hover:border-neutral-700 hover:shadow-[0_16px_40px_rgba(0,0,0,0.5)]'
+                    ? 'bg-neutral-900/80 border-neutral-800/90 hover:border-neutral-700 hover:shadow-[0_16px_40px_rgba(0,0,0,0.5)]'
                     : 'bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.06)]'
                 }`}
               >
@@ -67,23 +71,35 @@ export const Services: React.FC<ServicesProps> = ({ theme, onContactClick }) => 
                     <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 flex items-center justify-center transition-transform group-hover:scale-105">
                       <IconComp className="w-6 h-6" />
                     </div>
-                    <span className="text-xs font-mono px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400">
+                    <span className={`text-xs font-mono px-3 py-1 rounded-full border font-medium ${
+                      isDark
+                        ? 'border-neutral-700 text-[#E2E8F0] bg-neutral-800/60'
+                        : 'border-neutral-200 text-neutral-600 bg-neutral-50'
+                    }`}>
                       {service.tagline}
                     </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold font-heading text-neutral-900 dark:text-white mb-2.5">
+                  <h3 className={`text-xl sm:text-2xl font-bold font-heading mb-2.5 ${
+                    isDark ? 'text-white' : 'text-neutral-900'
+                  }`}>
                     {service.title}
                   </h3>
 
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
+                  <p className={`text-sm leading-relaxed mb-6 ${
+                    isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                  }`}>
                     {service.description}
                   </p>
 
                   {/* Deliverables */}
-                  <div className="space-y-2 pt-4 border-t border-neutral-200 dark:border-neutral-800 mb-6">
+                  <div className={`space-y-2 pt-4 border-t mb-6 ${
+                    isDark ? 'border-neutral-800' : 'border-neutral-200'
+                  }`}>
                     {service.deliverables.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+                      <div key={i} className={`flex items-start gap-2 text-xs sm:text-sm ${
+                        isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                      }`}>
                         <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                         <span>{item}</span>
                       </div>
@@ -93,7 +109,7 @@ export const Services: React.FC<ServicesProps> = ({ theme, onContactClick }) => 
 
                 <button
                   onClick={onContactClick}
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-500 hover:text-cyan-400 transition-colors self-start group-hover:translate-x-1"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-500 hover:text-cyan-400 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors self-start group-hover:translate-x-1"
                 >
                   <span>Discuss a Project</span>
                   <ArrowRight className="w-3.5 h-3.5" />

@@ -26,10 +26,14 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Career Milestones</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-neutral-900 dark:text-white tracking-tight">
+          <h2 className={`text-3xl sm:text-5xl font-extrabold font-heading tracking-tight ${
+            isDark ? 'text-white' : 'text-neutral-900'
+          }`}>
             Experience
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-300">
+          <p className={`mt-4 text-base sm:text-lg ${
+            isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+          }`}>
             Real-world enterprise exposure to software reliability, inventory tracking, and operational efficiency.
           </p>
         </motion.div>
@@ -58,7 +62,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
                 whileHover={{ y: -4 }}
                 className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
                   isDark
-                    ? 'bg-neutral-900/70 border-neutral-800 hover:border-neutral-700 shadow-xl'
+                    ? 'bg-neutral-900/80 border-neutral-800/90 hover:border-neutral-700 shadow-xl'
                     : 'bg-white border-neutral-200 hover:border-neutral-300 shadow-sm'
                 }`}
               >
@@ -66,7 +70,9 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
                   <div>
                     <div className="flex items-center gap-2">
                       <Building2 className="w-5 h-5 text-cyan-500" />
-                      <h3 className="text-xl sm:text-2xl font-bold font-heading text-neutral-900 dark:text-white">
+                      <h3 className={`text-xl sm:text-2xl font-bold font-heading ${
+                        isDark ? 'text-white' : 'text-neutral-900'
+                      }`}>
                         {exp.company}
                       </h3>
                     </div>
@@ -80,24 +86,32 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
                       <Calendar className="w-3.5 h-3.5" />
                       {exp.duration}
                     </span>
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400 flex items-center gap-1">
+                    <span className={`text-xs flex items-center gap-1 font-medium ${
+                      isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                    }`}>
                       <MapPin className="w-3 h-3" />
                       {exp.location}
                     </span>
                   </div>
                 </div>
 
-                <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
+                <p className={`text-sm leading-relaxed mb-6 ${
+                  isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                }`}>
                   {exp.description}
                 </p>
 
                 {/* Key Responsibilities */}
                 <div className="space-y-2.5 mb-6">
-                  <div className="text-xs font-bold uppercase tracking-wider text-neutral-400">
+                  <div className={`text-xs font-bold uppercase tracking-wider ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                  }`}>
                     Key Contributions & Responsibilities
                   </div>
                   {exp.responsibilities.map((resp, i) => (
-                    <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+                    <div key={i} className={`flex items-start gap-2.5 text-xs sm:text-sm ${
+                      isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                    }`}>
                       <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                       <span>{resp}</span>
                     </div>
@@ -106,7 +120,9 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
 
                 {/* Skills used */}
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
+                  <div className={`text-xs font-bold uppercase tracking-wider mb-2 ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                  }`}>
                     Applied Competencies
                   </div>
                   <div className="flex flex-wrap gap-1.5">
@@ -115,7 +131,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
                         key={skill}
                         className={`text-xs px-2.5 py-1 rounded-lg font-medium border ${
                           isDark
-                            ? 'bg-neutral-800/60 border-neutral-700/60 text-neutral-300'
+                            ? 'bg-neutral-800/80 border-neutral-700/80 text-[#E2E8F0]'
                             : 'bg-neutral-100 border-neutral-200 text-neutral-700'
                         }`}
                       >

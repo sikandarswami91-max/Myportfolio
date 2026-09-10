@@ -9,7 +9,7 @@ export const PERSONAL_INFO = {
   email: 'sikandarswami91@gmail.com',
   phone: '+91 9198431459',
   location: 'India',
-  github: 'https://github.com/sikandar-dev',
+  github: 'https://github.com/sikandarswami91-max',
   linkedin: 'https://linkedin.com/in/sikandar-mern',
   bio: `I am a dedicated MERN Stack Developer and final-year Bachelor of Computer Applications (BCA) student in Semester VI (Session 2025–26). Passionate about crafting scalable web architectures, fluid user interfaces, and robust REST APIs, I bridge modern frontend engineering with resilient backend databases.`,
   experienceSummary: '6+ Months of Industry Experience',
@@ -114,7 +114,7 @@ export const PROJECTS: Project[] = [
     accentColor: '#38BDF8',
     metrics: '99.2% Voice Recognition Accuracy',
     liveDemoUrl: 'https://demo-ai-assistant.sikandar.dev',
-    githubUrl: 'https://github.com/sikandar-dev/virtual-ai-assistant',
+    githubUrl: 'https://github.com/sikandarswami91-max/virtual-ai-assistant',
   },
   {
     id: 'ecommerce-website',
@@ -138,7 +138,7 @@ export const PROJECTS: Project[] = [
     accentColor: '#10B981',
     metrics: 'Sub-100ms Search Response',
     liveDemoUrl: 'https://demo-ecommerce.sikandar.dev',
-    githubUrl: 'https://github.com/sikandar-dev/mern-ecommerce-store',
+    githubUrl: 'https://github.com/sikandarswami91-max/mern-ecommerce-store',
   },
   {
     id: 'hospital-management-system',
@@ -162,7 +162,7 @@ export const PROJECTS: Project[] = [
     accentColor: '#6366F1',
     metrics: 'Organized 5+ Core Departments',
     liveDemoUrl: 'https://demo-hospital.sikandar.dev',
-    githubUrl: 'https://github.com/sikandar-dev/hospital-management-system',
+    githubUrl: 'https://github.com/sikandarswami91-max/hospital-management-system',
   },
   {
     id: 'mithai-shop-website',
@@ -186,7 +186,7 @@ export const PROJECTS: Project[] = [
     accentColor: '#F59E0B',
     metrics: 'Fast 60fps Scrolling & Animations',
     liveDemoUrl: 'https://demo-mithaishop.sikandar.dev',
-    githubUrl: 'https://github.com/sikandar-dev/mithai-shop-showcase',
+    githubUrl: 'https://github.com/sikandarswami91-max/mithai-shop-showcase',
   },
 ];
 

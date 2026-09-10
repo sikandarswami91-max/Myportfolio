@@ -49,7 +49,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                 className="w-2.5 h-2.5 rounded-full"
                 style={{ backgroundColor: project.accentColor }}
               />
-              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+              <span className={`text-xs font-semibold uppercase tracking-wider ${
+                isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+              }`}>
                 {project.category}
               </span>
             </div>
@@ -58,7 +60,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
               onClick={onClose}
               className={`p-1.5 rounded-lg border transition-colors ${
                 isDark
-                  ? 'border-neutral-800 hover:bg-neutral-800 text-neutral-400 hover:text-white'
+                  ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                   : 'border-neutral-200 hover:bg-neutral-100 text-neutral-500 hover:text-black'
               }`}
               aria-label="Close modal"
@@ -72,7 +74,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
             {/* Title & Overview */}
             <div>
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="text-2xl sm:text-3xl font-bold font-heading text-neutral-900 dark:text-white">
+                <h3 className={`text-2xl sm:text-3xl font-bold font-heading ${
+                  isDark ? 'text-white' : 'text-neutral-900'
+                }`}>
                   {project.title}
                 </h3>
                 {project.metrics && (
@@ -81,19 +85,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                   </span>
                 )}
               </div>
-              <p className="mt-3 text-neutral-600 dark:text-neutral-300 text-sm sm:text-base leading-relaxed">
+              <p className={`mt-3 text-sm sm:text-base leading-relaxed ${
+                isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+              }`}>
                 {project.longDescription}
               </p>
             </div>
 
             {/* Interactive Mockup Visual Window */}
             <div className={`p-5 rounded-xl border ${isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-100/70 border-neutral-200'}`}>
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-200 dark:border-neutral-800 text-xs text-neutral-500">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-200 dark:border-neutral-800 text-xs text-neutral-500 dark:text-neutral-400">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
-                  <span className="ml-2 font-mono text-[11px] text-neutral-400">
+                  <span className={`ml-2 font-mono text-[11px] ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-400'
+                  }`}>
                     app.{project.id}.demo
                   </span>
                 </div>
@@ -105,7 +113,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
 
               {/* Mockup Screen Details */}
               <div className="space-y-3">
-                <div className="p-4 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+                <div className={`p-4 rounded-lg border ${
+                  isDark ? 'bg-neutral-900/90 border-neutral-800' : 'bg-white border-neutral-200'
+                }`}>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 mb-2 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
                     Key Architectural Highlights
@@ -116,7 +126,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                         key={idx}
                         className={`p-2.5 rounded-md text-xs font-medium border ${
                           isDark
-                            ? 'bg-neutral-800/60 border-neutral-700/50 text-neutral-200'
+                            ? 'bg-neutral-800/80 border-neutral-700/60 text-[#E2E8F0]'
                             : 'bg-neutral-50 border-neutral-200 text-neutral-800'
                         }`}
                       >
@@ -126,13 +136,17 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                   </div>
                 </div>
 
-                <div className="p-4 rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+                <div className={`p-4 rounded-lg border ${
+                  isDark ? 'bg-neutral-900/90 border-neutral-800' : 'bg-white border-neutral-200'
+                }`}>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 mb-2.5">
                     Core Functionality & Deliverables
                   </h4>
                   <ul className="space-y-2">
                     {project.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+                      <li key={idx} className={`flex items-start gap-2 text-xs sm:text-sm ${
+                        isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                      }`}>
                         <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </li>
@@ -144,7 +158,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
 
             {/* Technologies */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2.5">
+              <h4 className={`text-xs font-bold uppercase tracking-wider mb-2.5 ${
+                isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+              }`}>
                 Technology Stack Used
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -153,7 +169,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                     key={tech}
                     className={`px-3 py-1 text-xs font-medium rounded-lg border ${
                       isDark
-                        ? 'bg-neutral-800/80 border-neutral-700 text-neutral-200'
+                        ? 'bg-neutral-800/80 border-neutral-700 text-[#E2E8F0]'
                         : 'bg-neutral-100 border-neutral-200 text-neutral-800'
                     }`}
                   >
@@ -177,7 +193,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                 rel="noreferrer"
                 className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-medium rounded-xl border transition-colors ${
                   isDark
-                    ? 'border-neutral-700 hover:bg-neutral-800 text-neutral-200'
+                    ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0]'
                     : 'border-neutral-300 hover:bg-neutral-100 text-neutral-700'
                 }`}
               >
@@ -198,7 +214,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
 
             <button
               onClick={onClose}
-              className="text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 font-medium"
+              className={`text-xs font-medium ${
+                isDark ? 'text-[#A8B3C2] hover:text-white' : 'text-neutral-500 hover:text-neutral-700'
+              }`}
             >
               Back to Portfolio
             </button>

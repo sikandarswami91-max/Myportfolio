@@ -82,10 +82,14 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Direct Communication</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-neutral-900 dark:text-white tracking-tight">
+          <h2 className={`text-3xl sm:text-5xl font-extrabold font-heading tracking-tight ${
+            isDark ? 'text-white' : 'text-neutral-900'
+          }`}>
             Let's Work Together
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-300">
+          <p className={`mt-4 text-base sm:text-lg ${
+            isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+          }`}>
             Have a project or opportunity? Feel free to get in touch.
           </p>
         </motion.div>
@@ -101,10 +105,14 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
             className="lg:col-span-5 space-y-4"
           >
             <div className="mb-6">
-              <h3 className="text-xl font-bold font-heading text-neutral-900 dark:text-white mb-2">
+              <h3 className={`text-xl font-bold font-heading mb-2 ${
+                isDark ? 'text-white' : 'text-neutral-900'
+              }`}>
                 Connect Directly
               </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              <p className={`text-sm ${
+                isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+              }`}>
                 Whether you're looking for a dedicated full-time MERN Stack developer, an ambitious intern, or an agile freelancer, I am ready to contribute.
               </p>
             </div>
@@ -113,7 +121,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
             <div
               className={`p-4 sm:p-5 rounded-2xl border flex items-center justify-between transition-all duration-200 ${
                 isDark
-                  ? 'bg-neutral-900/70 border-neutral-800'
+                  ? 'bg-neutral-900/80 border-neutral-800/90'
                   : 'bg-white border-neutral-200 shadow-sm'
               }`}
             >
@@ -122,12 +130,16 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
+                  <div className={`text-xs font-medium ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                  }`}>
                     Email Address
                   </div>
                   <a
                     href={`mailto:${PERSONAL_INFO.email}`}
-                    className="text-sm font-semibold text-neutral-900 dark:text-white hover:text-cyan-500 transition-colors"
+                    className={`text-sm font-semibold transition-colors ${
+                      isDark ? 'text-white hover:text-cyan-400' : 'text-neutral-900 hover:text-cyan-500'
+                    }`}
                   >
                     {PERSONAL_INFO.email}
                   </a>
@@ -140,7 +152,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   copiedEmail
                     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500'
                     : isDark
-                    ? 'border-neutral-800 hover:bg-neutral-800 text-neutral-400'
+                    ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                     : 'border-neutral-200 hover:bg-neutral-100 text-neutral-600'
                 }`}
                 title="Copy Email"
@@ -153,7 +165,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
             <div
               className={`p-4 sm:p-5 rounded-2xl border flex items-center justify-between transition-all duration-200 ${
                 isDark
-                  ? 'bg-neutral-900/70 border-neutral-800'
+                  ? 'bg-neutral-900/80 border-neutral-800/90'
                   : 'bg-white border-neutral-200 shadow-sm'
               }`}
             >
@@ -162,12 +174,16 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
+                  <div className={`text-xs font-medium ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                  }`}>
                     Phone / WhatsApp
                   </div>
                   <a
                     href={`tel:${PERSONAL_INFO.phone.replace(/\s+/g, '')}`}
-                    className="text-sm font-semibold text-neutral-900 dark:text-white hover:text-emerald-500 transition-colors"
+                    className={`text-sm font-semibold transition-colors ${
+                      isDark ? 'text-white hover:text-emerald-400' : 'text-neutral-900 hover:text-emerald-500'
+                    }`}
                   >
                     {PERSONAL_INFO.phone}
                   </a>
@@ -180,7 +196,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   copiedPhone
                     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500'
                     : isDark
-                    ? 'border-neutral-800 hover:bg-neutral-800 text-neutral-400'
+                    ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                     : 'border-neutral-200 hover:bg-neutral-100 text-neutral-600'
                 }`}
                 title="Copy Phone Number"
@@ -197,16 +213,22 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                 rel="noreferrer"
                 className={`p-4 rounded-2xl border flex items-center gap-3 transition-all hover:-translate-y-1 ${
                   isDark
-                    ? 'bg-neutral-900/70 border-neutral-800 hover:border-neutral-700'
+                    ? 'bg-neutral-900/80 border-neutral-800/90 hover:border-neutral-700'
                     : 'bg-white border-neutral-200 shadow-sm hover:border-neutral-300'
                 }`}
               >
-                <div className="w-9 h-9 rounded-xl bg-neutral-800/20 text-neutral-900 dark:text-white flex items-center justify-center">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${
+                  isDark ? 'bg-neutral-800 text-white' : 'bg-neutral-800/20 text-neutral-900'
+                }`}>
                   <Github className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-neutral-500 dark:text-neutral-400">Profile</div>
-                  <div className="text-sm font-bold text-neutral-900 dark:text-white">GitHub</div>
+                  <div className={`text-xs font-medium ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                  }`}>Profile</div>
+                  <div className={`text-sm font-bold ${
+                    isDark ? 'text-white' : 'text-neutral-900'
+                  }`}>GitHub</div>
                 </div>
               </a>
 
@@ -216,7 +238,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                 rel="noreferrer"
                 className={`p-4 rounded-2xl border flex items-center gap-3 transition-all hover:-translate-y-1 ${
                   isDark
-                    ? 'bg-neutral-900/70 border-neutral-800 hover:border-neutral-700'
+                    ? 'bg-neutral-900/80 border-neutral-800/90 hover:border-neutral-700'
                     : 'bg-white border-neutral-200 shadow-sm hover:border-neutral-300'
                 }`}
               >
@@ -224,8 +246,12 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   <Linkedin className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-neutral-500 dark:text-neutral-400">Network</div>
-                  <div className="text-sm font-bold text-neutral-900 dark:text-white">LinkedIn</div>
+                  <div className={`text-xs font-medium ${
+                    isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                  }`}>Network</div>
+                  <div className={`text-sm font-bold ${
+                    isDark ? 'text-white' : 'text-neutral-900'
+                  }`}>LinkedIn</div>
                 </div>
               </a>
             </div>
@@ -239,14 +265,18 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
             transition={{ duration: 0.6 }}
             className={`lg:col-span-7 p-6 sm:p-8 rounded-3xl border ${
               isDark
-                ? 'bg-neutral-900/70 border-neutral-800 shadow-xl'
+                ? 'bg-neutral-900/80 border-neutral-800/90 shadow-xl'
                 : 'bg-white border-neutral-200 shadow-lg shadow-neutral-200/50'
             }`}
           >
-            <h3 className="text-xl sm:text-2xl font-bold font-heading text-neutral-900 dark:text-white mb-2">
+            <h3 className={`text-xl sm:text-2xl font-bold font-heading mb-2 ${
+              isDark ? 'text-white' : 'text-neutral-900'
+            }`}>
               Send a Message
             </h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+            <p className={`text-sm mb-6 ${
+              isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+            }`}>
               Fill out the form below, and I will get back to you promptly.
             </p>
 
@@ -270,7 +300,9 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-1.5"
+                    className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                      isDark ? 'text-white' : 'text-neutral-700'
+                    }`}
                   >
                     Your Name *
                   </label>
@@ -287,7 +319,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                       errors.name
                         ? 'border-red-500 focus:ring-red-500/30'
                         : isDark
-                        ? 'bg-neutral-800/60 border-neutral-700/80 text-white focus:ring-cyan-500/50 focus:border-cyan-500'
+                        ? 'bg-neutral-900/90 border-neutral-700 text-white placeholder:text-neutral-400 focus:ring-cyan-500/50 focus:border-cyan-500'
                         : 'bg-neutral-50 border-neutral-300 text-neutral-900 focus:ring-cyan-500/50 focus:border-cyan-500'
                     }`}
                   />
@@ -300,7 +332,9 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-1.5"
+                    className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                      isDark ? 'text-white' : 'text-neutral-700'
+                    }`}
                   >
                     Your Email *
                   </label>
@@ -317,7 +351,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                       errors.email
                         ? 'border-red-500 focus:ring-red-500/30'
                         : isDark
-                        ? 'bg-neutral-800/60 border-neutral-700/80 text-white focus:ring-cyan-500/50 focus:border-cyan-500'
+                        ? 'bg-neutral-900/90 border-neutral-700 text-white placeholder:text-neutral-400 focus:ring-cyan-500/50 focus:border-cyan-500'
                         : 'bg-neutral-50 border-neutral-300 text-neutral-900 focus:ring-cyan-500/50 focus:border-cyan-500'
                     }`}
                   />
@@ -331,7 +365,9 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="block text-xs font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-1.5"
+                  className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${
+                    isDark ? 'text-white' : 'text-neutral-700'
+                  }`}
                 >
                   Message / Project Details *
                 </label>
@@ -348,7 +384,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                     errors.message
                       ? 'border-red-500 focus:ring-red-500/30'
                       : isDark
-                      ? 'bg-neutral-800/60 border-neutral-700/80 text-white focus:ring-cyan-500/50 focus:border-cyan-500'
+                      ? 'bg-neutral-900/90 border-neutral-700 text-white placeholder:text-neutral-400 focus:ring-cyan-500/50 focus:border-cyan-500'
                       : 'bg-neutral-50 border-neutral-300 text-neutral-900 focus:ring-cyan-500/50 focus:border-cyan-500'
                   }`}
                 />

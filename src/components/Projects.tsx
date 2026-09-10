@@ -30,7 +30,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
             technologies: p.technologies || [],
             image: p.image || '',
             liveUrl: p.liveUrl || 'https://demo.sikandar.dev',
-            githubUrl: p.githubUrl || 'https://github.com/sikandar-dev',
+            githubUrl: p.githubUrl || 'https://github.com/sikandarswami91-max',
             highlights: p.highlights && p.highlights.length > 0
               ? p.highlights
               : [
@@ -66,10 +66,14 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
             <Sparkles className="w-3.5 h-3.5" />
             <span>Portfolio Highlights</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-neutral-900 dark:text-white tracking-tight">
+          <h2 className={`text-3xl sm:text-5xl font-extrabold font-heading tracking-tight ${
+            isDark ? 'text-white' : 'text-neutral-900'
+          }`}>
             Featured Projects
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-300">
+          <p className={`mt-4 text-base sm:text-lg ${
+            isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+          }`}>
             Engineered with the MERN stack: high-availability backends, responsive client architecture, and polished UI/UX.
           </p>
         </motion.div>
@@ -87,7 +91,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                 whileHover={{ y: -6 }}
                 className={`group rounded-3xl border overflow-hidden transition-all duration-300 flex flex-col justify-between ${
                   isDark
-                    ? 'bg-neutral-900/70 border-neutral-800 hover:border-neutral-700 hover:shadow-[0_20px_45px_rgba(0,0,0,0.6)]'
+                    ? 'bg-neutral-900/80 border-neutral-800 hover:border-neutral-700 hover:shadow-[0_20px_45px_rgba(0,0,0,0.6)]'
                     : 'bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)]'
                 }`}
               >
@@ -110,7 +114,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                       <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                       <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                      <span className="ml-2 text-[11px] font-mono text-neutral-400 truncate max-w-[150px]">
+                      <span className={`ml-2 text-[11px] font-mono truncate max-w-[150px] ${
+                        isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                      }`}>
                         {project.id}.sikandar.dev
                       </span>
                     </div>
@@ -146,7 +152,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                         }`}
                       >
                         <div className="flex items-center justify-between mb-3 pb-2 border-b border-neutral-200 dark:border-neutral-800">
-                          <span className="text-xs font-bold text-neutral-900 dark:text-white font-heading">
+                          <span className={`text-xs font-bold font-heading ${
+                            isDark ? 'text-white' : 'text-neutral-900'
+                          }`}>
                             {project.title}
                           </span>
                           <span className="text-[10px] text-emerald-500 font-mono">
@@ -154,7 +162,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                           </span>
                         </div>
 
-                        <div className="space-y-1.5 text-[11px] text-neutral-600 dark:text-neutral-400">
+                        <div className={`space-y-1.5 text-[11px] ${
+                          isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                        }`}>
                           {project.highlights.slice(0, 2).map((h, i) => (
                             <div key={i} className="flex items-center gap-1.5">
                               <Check className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
@@ -169,7 +179,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                   {/* Bottom Preview Overlay on Hover */}
                   <div
                     onClick={() => navigate(`/projects/${project.id}`)}
-                    className="relative z-10 flex items-center justify-between text-xs text-neutral-400 cursor-pointer"
+                    className={`relative z-10 flex items-center justify-between text-xs cursor-pointer ${
+                      isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                    }`}
                   >
                     <span className="font-mono text-[11px]">Production MERN Stack</span>
                     <span className="inline-flex items-center gap-1 text-cyan-500 font-semibold group-hover:translate-x-1 transition-transform">
@@ -185,7 +197,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                     <div className="flex items-start justify-between gap-4 mb-2.5">
                       <h3
                         onClick={() => navigate(`/projects/${project.id}`)}
-                        className="cursor-pointer text-xl sm:text-2xl font-bold font-heading text-neutral-900 dark:text-white group-hover:text-cyan-500 transition-colors"
+                        className={`cursor-pointer text-xl sm:text-2xl font-bold font-heading group-hover:text-cyan-400 transition-colors ${
+                          isDark ? 'text-white' : 'text-neutral-900'
+                        }`}
                       >
                         {project.title}
                       </h3>
@@ -196,7 +210,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                       )}
                     </div>
 
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5 line-clamp-3">
+                    <p className={`text-sm leading-relaxed mb-5 line-clamp-3 ${
+                      isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                    }`}>
                       {project.description}
                     </p>
                   </div>
@@ -209,7 +225,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                           key={tech}
                           className={`text-xs px-2.5 py-1 rounded-lg font-medium border ${
                             isDark
-                              ? 'bg-neutral-800/80 border-neutral-700/60 text-neutral-300'
+                              ? 'bg-neutral-800/80 border-neutral-700/80 text-[#E2E8F0]'
                               : 'bg-neutral-100 border-neutral-200 text-neutral-700'
                           }`}
                         >
@@ -219,7 +235,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-wrap items-center gap-2.5 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+                    <div className={`flex flex-wrap items-center gap-2.5 pt-4 border-t ${
+                      isDark ? 'border-neutral-800' : 'border-neutral-200'
+                    }`}>
                       <Link
                         to={`/projects/${project.id}`}
                         className="flex-1 min-w-[110px] inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md hover:shadow-cyan-500/25 hover:opacity-95 transition-all text-center"
@@ -234,7 +252,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                         rel="noreferrer"
                         className={`inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-medium border transition-colors ${
                           isDark
-                            ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white'
+                            ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                             : 'border-neutral-300 bg-white hover:bg-neutral-50 text-neutral-800 hover:text-black shadow-sm'
                         }`}
                         title="Open Live Demo in new tab"
@@ -244,12 +262,12 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                       </a>
 
                       <a
-                        href={project.githubUrl || 'https://github.com/sikandar-dev'}
+                        href={project.githubUrl || 'https://github.com/sikandarswami91-max'}
                         target="_blank"
                         rel="noreferrer"
                         className={`p-2.5 rounded-xl border transition-colors ${
                           isDark
-                            ? 'border-neutral-700 hover:bg-neutral-800 text-neutral-300 hover:text-white'
+                            ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                             : 'border-neutral-300 hover:bg-neutral-100 text-neutral-700 hover:text-black shadow-sm'
                         }`}
                         title="GitHub Repository"

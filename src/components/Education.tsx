@@ -46,7 +46,7 @@ export const Education: React.FC<EducationProps> = ({ theme }) => {
               whileHover={{ y: -4 }}
               className={`p-6 sm:p-10 rounded-3xl border transition-all duration-300 relative overflow-hidden ${
                 isDark
-                  ? 'bg-neutral-900/70 border-neutral-800 hover:border-neutral-700 shadow-2xl'
+                  ? 'bg-neutral-900/80 border-neutral-800/90 hover:border-neutral-700 shadow-2xl'
                   : 'bg-white border-neutral-200 hover:border-neutral-300 shadow-lg shadow-neutral-200/50'
               }`}
             >
@@ -80,7 +80,7 @@ export const Education: React.FC<EducationProps> = ({ theme }) => {
 
               {/* Highlights */}
               <div className="space-y-3 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                <div className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                <div className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-300 mb-2 flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5" />
                   Key Coursework & Academic Focus
                 </div>
@@ -88,8 +88,8 @@ export const Education: React.FC<EducationProps> = ({ theme }) => {
                   {edu.highlights.map((item, i) => (
                     <div
                       key={i}
-                      className={`p-3 rounded-xl border flex items-start gap-2.5 text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 ${
-                        isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'
+                      className={`p-3 rounded-xl border flex items-start gap-2.5 text-xs sm:text-sm text-neutral-700 dark:text-neutral-200 ${
+                        isDark ? 'bg-neutral-800/60 border-neutral-700/80' : 'bg-neutral-50 border-neutral-200'
                       }`}
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />

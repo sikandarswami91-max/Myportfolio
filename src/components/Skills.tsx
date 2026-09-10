@@ -78,10 +78,14 @@ export const Skills: React.FC<SkillsProps> = ({ theme }) => {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Technical Arsenal</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold font-heading text-neutral-900 dark:text-white tracking-tight">
+          <h2 className={`text-3xl sm:text-5xl font-extrabold font-heading tracking-tight ${
+            isDark ? 'text-white' : 'text-neutral-900'
+          }`}>
             My Skills
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 dark:text-neutral-300">
+          <p className={`mt-4 text-base sm:text-lg ${
+            isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+          }`}>
             Engineered with modern industry standards, clean code architecture, and high-performance practices.
           </p>
         </motion.div>
@@ -96,7 +100,7 @@ export const Skills: React.FC<SkillsProps> = ({ theme }) => {
                 activeCategory === cat
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20'
                   : isDark
-                  ? 'bg-neutral-900/80 text-neutral-400 hover:text-white border border-neutral-800'
+                  ? 'bg-neutral-900/80 text-[#E2E8F0] hover:text-white border border-neutral-700/80'
                   : 'bg-neutral-100 text-neutral-600 hover:text-neutral-900 border border-neutral-200'
               }`}
             >
@@ -123,7 +127,7 @@ export const Skills: React.FC<SkillsProps> = ({ theme }) => {
                 transition={{ duration: 0.25 }}
                 className={`relative group rounded-2xl p-6 border transition-all duration-300 ${
                   isDark
-                    ? 'bg-neutral-900/60 border-neutral-800/80 hover:border-neutral-700 hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)]'
+                    ? 'bg-neutral-900/80 border-neutral-800 hover:border-neutral-700 hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)]'
                     : 'bg-white border-neutral-200/90 hover:border-neutral-300 hover:shadow-[0_12px_36px_rgba(0,0,0,0.06)]'
                 }`}
               >
@@ -164,15 +168,21 @@ export const Skills: React.FC<SkillsProps> = ({ theme }) => {
 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-1.5">
-                    <h3 className="text-lg font-bold font-heading text-neutral-900 dark:text-white">
+                    <h3 className={`text-lg font-bold font-heading ${
+                      isDark ? 'text-white' : 'text-neutral-900'
+                    }`}>
                       {skill.name}
                     </h3>
-                    <span className="text-xs font-mono text-neutral-400">
+                    <span className={`text-xs font-mono ${
+                      isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                    }`}>
                       {skill.category}
                     </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  <p className={`text-xs sm:text-sm leading-relaxed ${
+                    isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                  }`}>
                     {skill.description}
                   </p>
                 </div>

@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
     <footer
       className={`border-t transition-colors duration-300 ${
         isDark
-          ? 'bg-neutral-950 border-neutral-900 text-neutral-400'
+          ? 'bg-neutral-950 border-neutral-800/80 text-[#A8B3C2]'
           : 'bg-neutral-50 border-neutral-200 text-neutral-600'
       }`}
     >
@@ -38,11 +38,15 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
               <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
                 S
               </div>
-              <span className="font-heading text-xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
+              <span className={`font-heading text-xl font-extrabold tracking-tight ${
+                isDark ? 'text-white' : 'text-neutral-900'
+              }`}>
                 Sikandar<span className="text-cyan-500">.</span>
               </span>
             </a>
-            <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-medium">
+            <p className={`text-xs sm:text-sm font-medium ${
+              isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+            }`}>
               MERN Stack Developer • BCA Graduate 2026
             </p>
           </div>
@@ -55,7 +59,7 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
               rel="noreferrer"
               className={`p-2.5 rounded-xl border transition-all hover:scale-105 ${
                 isDark
-                  ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 hover:text-white'
+                  ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                   : 'border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-700 hover:text-black shadow-sm'
               }`}
               aria-label="GitHub Profile"
@@ -69,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
               rel="noreferrer"
               className={`p-2.5 rounded-xl border transition-all hover:scale-105 ${
                 isDark
-                  ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 hover:text-white'
+                  ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                   : 'border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-700 hover:text-black shadow-sm'
               }`}
               aria-label="LinkedIn Profile"
@@ -81,7 +85,7 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
               href={`mailto:${PERSONAL_INFO.email}`}
               className={`p-2.5 rounded-xl border transition-all hover:scale-105 ${
                 isDark
-                  ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 hover:text-white'
+                  ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                   : 'border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-700 hover:text-black shadow-sm'
               }`}
               aria-label="Send Email"
@@ -95,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
               onClick={scrollToTop}
               className={`p-2.5 rounded-xl border transition-all hover:scale-105 ml-2 ${
                 isDark
-                  ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-cyan-400'
+                  ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-cyan-400'
                   : 'border-neutral-200 bg-white hover:bg-neutral-100 text-cyan-600 shadow-sm'
               }`}
               title="Back to top"
@@ -107,7 +111,9 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
         </div>
 
         {/* Copyright & Disclaimer */}
-        <div className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-900 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 dark:text-neutral-500 gap-4 text-center sm:text-left">
+        <div className={`mt-8 pt-8 border-t flex flex-col sm:flex-row items-center justify-between text-xs gap-4 text-center sm:text-left ${
+          isDark ? 'border-neutral-800 text-[#A8B3C2]' : 'border-neutral-200 text-neutral-500'
+        }`}>
           <p>© 2026 Sikandar. All Rights Reserved.</p>
           <p className="flex items-center gap-2">
             <span>Built with React, Framer Motion & Tailwind CSS</span>

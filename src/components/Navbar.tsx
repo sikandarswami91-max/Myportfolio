@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, FileText, ArrowRight } from 'lucide-react';
+import { Menu, X, FileText, ArrowRight, Github } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { ThemeMode } from '../types';
+import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface NavbarProps {
   theme: ThemeMode;
@@ -119,7 +120,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
               S
             </div>
-            <span className="font-heading text-lg sm:text-xl font-extrabold tracking-tight text-neutral-900 dark:text-white">
+            <span className={`font-heading text-lg sm:text-xl font-extrabold tracking-tight ${
+              isDark ? 'text-white' : 'text-neutral-900'
+            }`}>
               Sikandar<span className="text-cyan-500">.</span>
             </span>
           </a>
@@ -140,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     isActive
                       ? 'text-cyan-500 dark:text-cyan-400 font-semibold'
                       : isDark
-                      ? 'text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800/40'
+                      ? 'text-[#E2E8F0] hover:text-white hover:bg-neutral-800/60'
                       : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100/60'
                   }`}
                 >
@@ -157,8 +160,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </div>
 
-          {/* Right Side Actions: ThemeToggle + Resume + Mobile Menu */}
+          {/* Right Side Actions: GitHub + ThemeToggle + Resume + Mobile Menu */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <a
+              id="navbar-github-link"
+              href={PERSONAL_INFO.github}
+              target="_blank"
+              rel="noreferrer"
+              className={`p-2 rounded-xl border transition-colors ${
+                isDark
+                  ? 'border-neutral-800 bg-neutral-900/60 text-[#E2E8F0] hover:text-white hover:bg-neutral-800'
+                  : 'border-neutral-200 bg-neutral-100/60 text-neutral-700 hover:text-black hover:bg-neutral-200/60'
+              }`}
+              title="GitHub Profile (sikandarswami91-max)"
+              aria-label="GitHub Profile"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
 
             <motion.button
@@ -215,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       isActive
                         ? 'bg-cyan-500/15 text-cyan-500 font-semibold'
                         : isDark
-                        ? 'hover:bg-neutral-800 text-neutral-300'
+                        ? 'hover:bg-neutral-800 text-[#E2E8F0]'
                         : 'hover:bg-neutral-100 text-neutral-700'
                     }`}
                   >
@@ -225,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 );
               })}
 
-              <div className="pt-3 mt-2 border-t border-neutral-200 dark:border-neutral-800">
+              <div className="pt-3 mt-2 border-t border-neutral-200 dark:border-neutral-800 space-y-2">
                 <button
                   onClick={handleResumeClick}
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
@@ -233,6 +252,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <FileText className="w-4 h-4" />
                   <span>View / Download Resume</span>
                 </button>
+
+                <a
+                  href={PERSONAL_INFO.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-semibold border transition-colors ${
+                    isDark
+                      ? 'border-neutral-800 bg-neutral-800/80 text-[#E2E8F0] hover:text-white'
+                      : 'border-neutral-200 bg-neutral-100 text-neutral-800 hover:text-black'
+                  }`}
+                >
+                  <Github className="w-4 h-4 text-cyan-500" />
+                  <span>GitHub Profile (sikandarswami91-max)</span>
+                </a>
               </div>
             </div>
           </motion.div>

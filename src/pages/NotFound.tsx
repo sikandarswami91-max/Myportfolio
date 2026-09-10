@@ -28,7 +28,7 @@ export const NotFound: React.FC = () => {
           Page Not Found
         </h1>
 
-        <p className="text-sm text-neutral-400 mb-8 leading-relaxed">
+        <p className="text-sm text-neutral-300 mb-8 leading-relaxed">
           The route or page you are looking for does not exist or has been moved. Use the navigation buttons below to return safely.
         </p>
 
@@ -43,7 +43,7 @@ export const NotFound: React.FC = () => {
 
           <Link
             to="/projects"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-medium border border-neutral-800 hover:bg-neutral-800/80 text-neutral-300 hover:text-white transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-medium border border-neutral-700 hover:bg-neutral-800 text-neutral-200 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>View Projects</span>

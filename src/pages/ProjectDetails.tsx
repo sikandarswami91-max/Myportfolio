@@ -82,7 +82,7 @@ export const ProjectDetails: React.FC = () => {
             image: p.image || '',
             liveUrl: p.liveUrl || 'https://demo.sikandar.dev',
             liveDemoUrl: p.liveUrl || 'https://demo.sikandar.dev',
-            githubUrl: p.githubUrl || 'https://github.com/sikandar-dev',
+            githubUrl: p.githubUrl || 'https://github.com/sikandarswami91-max',
             features: p.features || p.highlights || [
               'Full-Stack MERN Architecture with Express REST APIs',
               'Optimized MongoDB document schemas with Mongoose relations',
@@ -147,7 +147,9 @@ export const ProjectDetails: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumbs & Back Navigation */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm text-neutral-500">
+            <nav aria-label="Breadcrumb" className={`flex items-center gap-2 text-xs sm:text-sm ${
+              isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+            }`}>
               <Link to="/" className="hover:text-cyan-500 transition-colors">
                 Home
               </Link>
@@ -156,7 +158,9 @@ export const ProjectDetails: React.FC = () => {
                 Projects
               </Link>
               <span>/</span>
-              <span className="text-neutral-800 dark:text-neutral-200 font-medium truncate max-w-[200px] sm:max-w-none">
+              <span className={`font-medium truncate max-w-[200px] sm:max-w-none ${
+                isDark ? 'text-white' : 'text-neutral-800'
+              }`}>
                 {project ? project.title : 'Details'}
               </span>
             </nav>
@@ -165,7 +169,7 @@ export const ProjectDetails: React.FC = () => {
               onClick={() => navigate('/projects')}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium border transition-all ${
                 isDark
-                  ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 hover:text-white'
+                  ? 'border-neutral-700 bg-neutral-900/80 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                   : 'border-neutral-200 bg-white hover:bg-neutral-100 text-neutral-700 hover:text-black shadow-sm'
               }`}
             >
@@ -187,10 +191,14 @@ export const ProjectDetails: React.FC = () => {
               <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 border border-amber-500/20 flex items-center justify-center mx-auto mb-4">
                 <FolderKanban className="w-8 h-8" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-heading text-neutral-900 dark:text-white mb-2">
+              <h2 className={`text-2xl sm:text-3xl font-bold font-heading mb-2 ${
+                isDark ? 'text-white' : 'text-neutral-900'
+              }`}>
                 Project Not Found
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6 max-w-md mx-auto">
+              <p className={`text-sm mb-6 max-w-md mx-auto ${
+                isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+              }`}>
                 We could not locate any project matching "<span className="font-mono text-cyan-400">{slug}</span>". It may have been renamed or relocated.
               </p>
               <button
@@ -240,16 +248,22 @@ export const ProjectDetails: React.FC = () => {
                   )}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-neutral-900 dark:text-white tracking-tight mb-4">
+                <h1 className={`text-3xl sm:text-5xl font-extrabold font-heading tracking-tight mb-4 ${
+                  isDark ? 'text-white' : 'text-neutral-900'
+                }`}>
                   {project.title}
                 </h1>
 
-                <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-3xl leading-relaxed">
+                <p className={`text-base sm:text-lg max-w-3xl leading-relaxed ${
+                  isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                }`}>
                   {project.longDescription || project.description}
                 </p>
 
                 {/* Primary Actions Bar */}
-                <div className="flex flex-wrap items-center gap-3.5 pt-8 mt-8 border-t border-neutral-200 dark:border-neutral-800">
+                <div className={`flex flex-wrap items-center gap-3.5 pt-8 mt-8 border-t ${
+                  isDark ? 'border-neutral-800' : 'border-neutral-200'
+                }`}>
                   <a
                     href={project.liveDemoUrl || project.liveUrl || 'https://demo.sikandar.dev'}
                     target="_blank"
@@ -261,12 +275,12 @@ export const ProjectDetails: React.FC = () => {
                   </a>
 
                   <a
-                    href={project.githubUrl || 'https://github.com/sikandar-dev'}
+                    href={project.githubUrl || 'https://github.com/sikandarswami91-max'}
                     target="_blank"
                     rel="noreferrer"
                     className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-medium border transition-colors ${
                       isDark
-                        ? 'border-neutral-700 bg-neutral-900 text-neutral-200 hover:bg-neutral-800 hover:text-white'
+                        ? 'border-neutral-700 bg-neutral-900 text-[#E2E8F0] hover:bg-neutral-800 hover:text-white'
                         : 'border-neutral-300 bg-white text-neutral-800 hover:bg-neutral-50 shadow-sm'
                     }`}
                   >
@@ -278,7 +292,7 @@ export const ProjectDetails: React.FC = () => {
                     onClick={() => navigate('/contact')}
                     className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-medium border transition-colors ${
                       isDark
-                        ? 'border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/60'
+                        ? 'border-neutral-700 text-[#E2E8F0] hover:text-white hover:bg-neutral-800'
                         : 'border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
                     }`}
                   >
@@ -294,9 +308,11 @@ export const ProjectDetails: React.FC = () => {
                 <div className="lg:col-span-8 space-y-8">
                   {/* Key Highlights */}
                   <div className={`p-6 sm:p-8 rounded-3xl border ${
-                    isDark ? 'bg-neutral-900/60 border-neutral-800' : 'bg-white border-neutral-200 shadow-md'
+                    isDark ? 'bg-neutral-900/80 border-neutral-800' : 'bg-white border-neutral-200 shadow-md'
                   }`}>
-                    <h3 className="text-xl font-bold font-heading text-neutral-900 dark:text-white mb-6 flex items-center gap-2">
+                    <h3 className={`text-xl font-bold font-heading mb-6 flex items-center gap-2 ${
+                      isDark ? 'text-white' : 'text-neutral-900'
+                    }`}>
                       <Sparkles className="w-5 h-5 text-cyan-500" />
                       <span>Key Features & Engineering Highlights</span>
                     </h3>
@@ -306,7 +322,9 @@ export const ProjectDetails: React.FC = () => {
                         ? project.features
                         : project.highlights
                       ).map((feat, index) => (
-                        <div key={index} className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-300">
+                        <div key={index} className={`flex items-start gap-3 text-sm ${
+                          isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                        }`}>
                           <CheckCircle2 className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
                           <span className="leading-relaxed">{feat}</span>
                         </div>
@@ -316,9 +334,11 @@ export const ProjectDetails: React.FC = () => {
 
                   {/* Architecture & Stack Details */}
                   <div className={`p-6 sm:p-8 rounded-3xl border ${
-                    isDark ? 'bg-neutral-900/60 border-neutral-800' : 'bg-white border-neutral-200 shadow-md'
+                    isDark ? 'bg-neutral-900/80 border-neutral-800' : 'bg-white border-neutral-200 shadow-md'
                   }`}>
-                    <h3 className="text-xl font-bold font-heading text-neutral-900 dark:text-white mb-6 flex items-center gap-2">
+                    <h3 className={`text-xl font-bold font-heading mb-6 flex items-center gap-2 ${
+                      isDark ? 'text-white' : 'text-neutral-900'
+                    }`}>
                       <Layers className="w-5 h-5 text-blue-500" />
                       <span>Full-Stack Architecture</span>
                     </h3>
@@ -327,11 +347,15 @@ export const ProjectDetails: React.FC = () => {
                       <div className={`p-4 rounded-xl border ${
                         isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'
                       }`}>
-                        <div className="font-semibold text-neutral-900 dark:text-white mb-1.5 flex items-center gap-2">
+                        <div className={`font-semibold mb-1.5 flex items-center gap-2 ${
+                          isDark ? 'text-white' : 'text-neutral-900'
+                        }`}>
                           <Cpu className="w-4 h-4 text-cyan-500" />
                           <span>Frontend Stack</span>
                         </div>
-                        <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                        <p className={`leading-relaxed ${
+                          isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                        }`}>
                           Built with React, stateful custom hooks, Tailwind utility classes, and Framer Motion micro-interactions.
                         </p>
                       </div>
@@ -339,11 +363,15 @@ export const ProjectDetails: React.FC = () => {
                       <div className={`p-4 rounded-xl border ${
                         isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'
                       }`}>
-                        <div className="font-semibold text-neutral-900 dark:text-white mb-1.5 flex items-center gap-2">
+                        <div className={`font-semibold mb-1.5 flex items-center gap-2 ${
+                          isDark ? 'text-white' : 'text-neutral-900'
+                        }`}>
                           <Server className="w-4 h-4 text-emerald-500" />
                           <span>API & Server</span>
                         </div>
-                        <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                        <p className={`leading-relaxed ${
+                          isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                        }`}>
                           Node.js & Express REST endpoints, modular router handlers, and strict request input sanitization.
                         </p>
                       </div>
@@ -351,11 +379,15 @@ export const ProjectDetails: React.FC = () => {
                       <div className={`p-4 rounded-xl border ${
                         isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'
                       }`}>
-                        <div className="font-semibold text-neutral-900 dark:text-white mb-1.5 flex items-center gap-2">
+                        <div className={`font-semibold mb-1.5 flex items-center gap-2 ${
+                          isDark ? 'text-white' : 'text-neutral-900'
+                        }`}>
                           <Database className="w-4 h-4 text-amber-500" />
                           <span>Database & Storage</span>
                         </div>
-                        <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                        <p className={`leading-relaxed ${
+                          isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                        }`}>
                           MongoDB Atlas cluster with Mongoose schema modeling, compound indexes, and cloud persistence.
                         </p>
                       </div>
@@ -363,11 +395,15 @@ export const ProjectDetails: React.FC = () => {
                       <div className={`p-4 rounded-xl border ${
                         isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'
                       }`}>
-                        <div className="font-semibold text-neutral-900 dark:text-white mb-1.5 flex items-center gap-2">
+                        <div className={`font-semibold mb-1.5 flex items-center gap-2 ${
+                          isDark ? 'text-white' : 'text-neutral-900'
+                        }`}>
                           <Check className="w-4 h-4 text-indigo-500" />
                           <span>Quality & Deployment</span>
                         </div>
-                        <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                        <p className={`leading-relaxed ${
+                          isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                        }`}>
                           ESLint verification, TypeScript type-safety across client/server, and automated cloud hosting pipelines.
                         </p>
                       </div>
@@ -386,7 +422,9 @@ export const ProjectDetails: React.FC = () => {
                         <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                         <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                        <span className="ml-2 font-mono text-[11px] text-neutral-400 truncate max-w-[130px]">
+                        <span className={`ml-2 font-mono text-[11px] truncate max-w-[130px] ${
+                          isDark ? 'text-[#A8B3C2]' : 'text-neutral-400'
+                        }`}>
                           app.{project.id}.demo
                         </span>
                       </div>
@@ -405,10 +443,14 @@ export const ProjectDetails: React.FC = () => {
                           style={{ backgroundColor: `${project.accentColor}20`, color: project.accentColor }}>
                           <Cpu className="w-6 h-6" />
                         </div>
-                        <div className="font-heading font-bold text-sm text-neutral-900 dark:text-white mb-1">
+                        <div className={`font-heading font-bold text-sm mb-1 ${
+                          isDark ? 'text-white' : 'text-neutral-900'
+                        }`}>
                           {project.title}
                         </div>
-                        <div className="text-[11px] text-neutral-500">Production MERN Application</div>
+                        <div className={`text-[11px] ${
+                          isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                        }`}>Production MERN Application</div>
                       </div>
                     )}
 
@@ -425,9 +467,11 @@ export const ProjectDetails: React.FC = () => {
 
                   {/* Technologies Badge Box */}
                   <div className={`p-6 rounded-3xl border ${
-                    isDark ? 'bg-neutral-900/60 border-neutral-800' : 'bg-white border-neutral-200 shadow-md'
+                    isDark ? 'bg-neutral-900/80 border-neutral-800' : 'bg-white border-neutral-200 shadow-md'
                   }`}>
-                    <h4 className="text-sm font-semibold uppercase tracking-wider text-neutral-400 mb-4">
+                    <h4 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
+                      isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
+                    }`}>
                       Technologies & Libraries
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -436,7 +480,7 @@ export const ProjectDetails: React.FC = () => {
                           key={tech}
                           className={`text-xs px-3 py-1.5 rounded-xl font-medium border ${
                             isDark
-                              ? 'bg-neutral-800/80 border-neutral-700/60 text-neutral-300'
+                              ? 'bg-neutral-800/80 border-neutral-700/60 text-[#E2E8F0]'
                               : 'bg-neutral-100 border-neutral-200 text-neutral-700'
                           }`}
                         >
@@ -449,9 +493,13 @@ export const ProjectDetails: React.FC = () => {
               </div>
 
               {/* Other Projects Quick Switcher */}
-              <div className="pt-12 border-t border-neutral-200 dark:border-neutral-800">
+              <div className={`pt-12 border-t ${
+                isDark ? 'border-neutral-800' : 'border-neutral-200'
+              }`}>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl sm:text-2xl font-bold font-heading text-neutral-900 dark:text-white">
+                  <h3 className={`text-xl sm:text-2xl font-bold font-heading ${
+                    isDark ? 'text-white' : 'text-neutral-900'
+                  }`}>
                     Explore Other Projects
                   </h3>
                   <Link
@@ -473,7 +521,7 @@ export const ProjectDetails: React.FC = () => {
                         to={`/projects/${other.id}`}
                         className={`p-5 rounded-2xl border transition-all duration-300 group flex flex-col justify-between ${
                           isDark
-                            ? 'bg-neutral-900/60 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/90'
+                            ? 'bg-neutral-900/80 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900'
                             : 'bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-md'
                         }`}
                       >
@@ -486,10 +534,14 @@ export const ProjectDetails: React.FC = () => {
                               View <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                             </span>
                           </div>
-                          <h4 className="text-base font-bold font-heading text-neutral-900 dark:text-white group-hover:text-cyan-500 transition-colors mb-1.5">
+                          <h4 className={`text-base font-bold font-heading group-hover:text-cyan-400 transition-colors mb-1.5 ${
+                            isDark ? 'text-white' : 'text-neutral-900'
+                          }`}>
                             {other.title}
                           </h4>
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed">
+                          <p className={`text-xs line-clamp-2 leading-relaxed ${
+                            isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                          }`}>
                             {other.description}
                           </p>
                         </div>

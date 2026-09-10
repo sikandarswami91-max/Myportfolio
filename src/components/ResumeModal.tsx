@@ -104,7 +104,9 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs sm:text-sm font-semibold tracking-wide text-neutral-700 dark:text-neutral-200 font-heading">
+                  <span className={`text-xs sm:text-sm font-semibold tracking-wide font-heading ${
+                    isDark ? 'text-white' : 'text-neutral-700'
+                  }`}>
                     Original Resume
                   </span>
                 </div>
@@ -116,7 +118,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                     className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md font-medium transition-all ${
                       viewMode === 'preview'
                         ? 'bg-white dark:bg-neutral-700 text-cyan-600 dark:text-cyan-400 shadow-sm'
-                        : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
+                        : isDark ? 'text-[#A8B3C2] hover:text-white' : 'text-neutral-500 hover:text-neutral-900'
                     }`}
                   >
                     <FileText className="w-3.5 h-3.5" />
@@ -127,7 +129,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                     className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md font-medium transition-all ${
                       viewMode === 'text'
                         ? 'bg-white dark:bg-neutral-700 text-cyan-600 dark:text-cyan-400 shadow-sm'
-                        : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
+                        : isDark ? 'text-[#A8B3C2] hover:text-white' : 'text-neutral-500 hover:text-neutral-900'
                     }`}
                   >
                     <Eye className="w-3.5 h-3.5" />
@@ -144,7 +146,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                   rel="noopener noreferrer"
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
                     isDark
-                      ? 'border-neutral-700 hover:bg-neutral-800 text-neutral-300'
+                      ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0]'
                       : 'border-neutral-300 hover:bg-neutral-100 text-neutral-700'
                   }`}
                   title="Open PDF in new browser tab"
@@ -178,7 +180,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                   onClick={onClose}
                   className={`p-1.5 rounded-lg border transition-colors ${
                     isDark
-                      ? 'border-neutral-800 hover:bg-neutral-800 text-neutral-400 hover:text-white'
+                      ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
                       : 'border-neutral-200 hover:bg-neutral-100 text-neutral-500 hover:text-black'
                   }`}
                   aria-label="Close modal"
@@ -196,7 +198,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                   className={`flex-1 flex items-center justify-center gap-1.5 py-1 rounded-md font-medium transition-all ${
                     viewMode === 'preview'
                       ? 'bg-white dark:bg-neutral-700 text-cyan-600 dark:text-cyan-400 shadow-sm'
-                      : 'text-neutral-500'
+                      : isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
                   }`}
                 >
                   <FileText className="w-3.5 h-3.5" />
@@ -207,7 +209,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                   className={`flex-1 flex items-center justify-center gap-1.5 py-1 rounded-md font-medium transition-all ${
                     viewMode === 'text'
                       ? 'bg-white dark:bg-neutral-700 text-cyan-600 dark:text-cyan-400 shadow-sm'
-                      : 'text-neutral-500'
+                      : isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
                   }`}
                 >
                   <Eye className="w-3.5 h-3.5" />
@@ -222,7 +224,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                 {/* Document Control Bar */}
                 <div className="flex items-center justify-between px-3 sm:px-5 py-2 border-b border-neutral-800/80 bg-neutral-900/90 text-xs text-neutral-300 select-none z-10 shrink-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-neutral-400">Page 1 of 1</span>
+                    <span className="font-medium text-[#E2E8F0]">Page 1 of 1</span>
                     <span className="text-neutral-600 hidden sm:inline">•</span>
                     <span className="font-mono text-cyan-400 hidden sm:inline">{zoomLevel}% scale</span>
                   </div>
@@ -279,14 +281,18 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                 <div className="border-b pb-6 border-neutral-200 dark:border-neutral-800">
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
                     <div>
-                      <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-white font-heading">
+                      <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight font-heading ${
+                        isDark ? 'text-white' : 'text-neutral-900'
+                      }`}>
                         SIKANDAR
                       </h2>
                       <p className="text-base font-medium text-cyan-600 dark:text-cyan-400 mt-0.5">
                         MERN Stack Developer
                       </p>
                     </div>
-                    <div className="flex flex-wrap gap-y-1 gap-x-4 text-xs text-neutral-500 dark:text-neutral-400">
+                    <div className={`flex flex-wrap gap-y-1 gap-x-4 text-xs ${
+                      isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+                    }`}>
                       <span className="inline-flex items-center gap-1">
                         <Mail className="w-3.5 h-3.5 text-cyan-500" />
                         sikandarswami@91gmail.com
@@ -309,12 +315,16 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                     <GraduationCap className="w-4 h-4" />
                     Education
                   </h3>
-                  <div className={`p-4 rounded-xl border ${isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-                    <div className="flex flex-col sm:flex-row sm:justify-between font-semibold text-neutral-900 dark:text-white">
+                  <div className={`p-4 rounded-xl border ${isDark ? 'bg-neutral-800/80 border-neutral-700' : 'bg-neutral-50 border-neutral-200'}`}>
+                    <div className={`flex flex-col sm:flex-row sm:justify-between font-semibold ${
+                      isDark ? 'text-white' : 'text-neutral-900'
+                    }`}>
                       <span>Maharishi University Of Information Technology</span>
                       <span className="text-xs text-cyan-500 font-mono sm:self-center">Lucknow, India</span>
                     </div>
-                    <div className="flex flex-col sm:flex-row sm:justify-between text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                    <div className={`flex flex-col sm:flex-row sm:justify-between text-xs mt-1 ${
+                      isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+                    }`}>
                       <span>Bachelor of Computer Application – Software Engineer</span>
                       <span className="font-mono">September 2023 – 2026</span>
                     </div>
@@ -328,8 +338,10 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                     Skills Summary
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-                      <span className="text-xs font-semibold text-neutral-900 dark:text-white block mb-1.5">
+                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-neutral-800/80 border-neutral-700' : 'bg-neutral-50 border-neutral-200'}`}>
+                      <span className={`text-xs font-semibold block mb-1.5 ${
+                        isDark ? 'text-white' : 'text-neutral-900'
+                      }`}>
                         Languages & Frontend
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -341,8 +353,10 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                       </div>
                     </div>
 
-                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-                      <span className="text-xs font-semibold text-neutral-900 dark:text-white block mb-1.5">
+                    <div className={`p-3 rounded-xl border ${isDark ? 'bg-neutral-800/80 border-neutral-700' : 'bg-neutral-50 border-neutral-200'}`}>
+                      <span className={`text-xs font-semibold block mb-1.5 ${
+                        isDark ? 'text-white' : 'text-neutral-900'
+                      }`}>
                         Backend & Database
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -362,12 +376,16 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                     <Briefcase className="w-4 h-4" />
                     Work Experience (Fresher)
                   </h3>
-                  <div className={`p-4 rounded-xl border ${isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-                    <div className="flex flex-col sm:flex-row sm:justify-between font-semibold text-neutral-900 dark:text-white">
+                  <div className={`p-4 rounded-xl border ${isDark ? 'bg-neutral-800/80 border-neutral-700' : 'bg-neutral-50 border-neutral-200'}`}>
+                    <div className={`flex flex-col sm:flex-row sm:justify-between font-semibold ${
+                      isDark ? 'text-white' : 'text-neutral-900'
+                    }`}>
                       <span>FRONTEND DEVELOPER INTERN | (Code Alfa) | Virtual</span>
                       <span className="text-xs text-cyan-500 font-mono sm:self-center">January 25 - June 25</span>
                     </div>
-                    <ul className="mt-2.5 space-y-1.5 text-xs text-neutral-600 dark:text-neutral-300">
+                    <ul className={`mt-2.5 space-y-1.5 text-xs ${
+                      isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
+                    }`}>
                       <li className="flex items-start gap-1.5">
                         <span className="text-cyan-500 mt-0.5">•</span>
                         <span>Developed and optimized responsive user interfaces using React.js and Tailwind CSS, enhancing user experience. Collaborated with backend teams to integrate RESTful APIs.</span>
@@ -395,19 +413,27 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
                     Projects
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-                      <h4 className="font-semibold text-neutral-900 dark:text-white text-xs mb-1">
+                    <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-neutral-800/80 border-neutral-700' : 'bg-neutral-50 border-neutral-200'}`}>
+                      <h4 className={`font-semibold text-xs mb-1 ${
+                        isDark ? 'text-white' : 'text-neutral-900'
+                      }`}>
                         Studio99 Salon
                       </h4>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      <p className={`text-xs ${
+                        isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+                      }`}>
                         Designed and developed a responsive salon website using React.js and Tailwind CSS with service sections, bridal packages, and interactive UI components.
                       </p>
                     </div>
-                    <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-neutral-800/40 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-                      <h4 className="font-semibold text-neutral-900 dark:text-white text-xs mb-1">
+                    <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-neutral-800/80 border-neutral-700' : 'bg-neutral-50 border-neutral-200'}`}>
+                      <h4 className={`font-semibold text-xs mb-1 ${
+                        isDark ? 'text-white' : 'text-neutral-900'
+                      }`}>
                         MegaBasket
                       </h4>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                      <p className={`text-xs ${
+                        isDark ? 'text-[#E2E8F0]' : 'text-neutral-500'
+                      }`}>
                         Full-stack e-commerce platform with JWT authentication, MongoDB integration, product/inventory management, cart, and modern admin dashboard.
                       </p>
                     </div>
@@ -419,7 +445,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
             {/* Footer */}
             <div
               className={`px-4 sm:px-6 py-2.5 border-t text-xs flex justify-between items-center ${
-                isDark ? 'border-neutral-800 bg-neutral-900/80 text-neutral-400' : 'border-neutral-200 bg-neutral-50 text-neutral-600'
+                isDark ? 'border-neutral-800 bg-neutral-900/90 text-[#E2E8F0]' : 'border-neutral-200 bg-neutral-50 text-neutral-600'
               }`}
             >
               <span className="truncate mr-2">

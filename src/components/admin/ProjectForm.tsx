@@ -368,7 +368,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
                     type="url"
                     value={formData.githubUrl}
                     onChange={(e) => setFormData({ ...formData, githubUrl: e.target.value })}
-                    placeholder="https://github.com/sikandar-dev/..."
+                    placeholder="https://github.com/sikandarswami91-max/..."
                     className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-neutral-800 bg-neutral-950 text-white focus:outline-none focus:border-cyan-500"
                   />
                 </div>
