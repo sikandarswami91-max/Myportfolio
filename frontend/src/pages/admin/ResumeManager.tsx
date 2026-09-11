@@ -61,13 +61,13 @@ export const ResumeManager: React.FC = () => {
     <AdminLayout title="Resume Management">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Upload Card */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-neutral-900 border border-neutral-800 shadow-xl">
-          <h3 className="text-lg font-bold text-white font-heading mb-2">Upload New Resume</h3>
-          <p className="text-sm text-neutral-400 mb-6">
+        <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 shadow-xl">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white font-heading mb-2">Upload New Resume</h3>
+          <p className="text-sm text-slate-500 dark:text-neutral-400 mb-6">
             Upload your latest resume in PDF format. This will automatically become the active resume for downloads.
           </p>
 
-          <label className="border-2 border-dashed border-neutral-700 hover:border-cyan-500 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-colors bg-neutral-950/50">
+          <label className="border-2 border-dashed border-slate-200 dark:border-neutral-700 hover:border-cyan-500 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-colors bg-slate-50/50 dark:bg-neutral-950/50">
             <input
               type="file"
               accept=".pdf"
@@ -77,33 +77,33 @@ export const ResumeManager: React.FC = () => {
             />
             {uploading ? (
               <div className="flex flex-col items-center gap-2">
-                <Loader2 className="w-8 h-8 text-cyan-400 animate-spin" />
-                <span className="text-sm text-neutral-300 font-medium">Uploading PDF to server...</span>
+                <Loader2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400 animate-spin" />
+                <span className="text-sm text-slate-600 dark:text-neutral-300 font-medium">Uploading PDF to server...</span>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-2 text-center">
-                <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 mb-2">
+                <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 mb-2">
                   <UploadCloud className="w-8 h-8" />
                 </div>
-                <span className="text-sm font-semibold text-white">Click or drag & drop resume PDF here</span>
-                <span className="text-xs text-neutral-400">PDF up to 10MB</span>
+                <span className="text-sm font-semibold text-slate-900 dark:text-white">Click or drag & drop resume PDF here</span>
+                <span className="text-xs text-slate-500 dark:text-neutral-400">PDF up to 10MB</span>
               </div>
             )}
           </label>
         </div>
 
         {/* Current Active Resume */}
-        <div className="p-6 rounded-2xl bg-neutral-900/60 border border-neutral-800">
-          <h3 className="text-base font-bold text-white font-heading mb-4">Current Active Resume</h3>
+        <div className="p-6 rounded-2xl bg-white/70 dark:bg-neutral-900/60 border border-slate-200 dark:border-neutral-800">
+          <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading mb-4">Current Active Resume</h3>
           {activeResume ? (
-            <div className="flex items-center justify-between p-4 rounded-xl bg-neutral-800/60 border border-neutral-700/60">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-slate-100 dark:bg-neutral-800/60 border border-slate-200 dark:border-neutral-700/60">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="p-2.5 rounded-xl bg-cyan-500/15 text-cyan-400">
+                <div className="p-2.5 rounded-xl bg-cyan-500/15 text-cyan-600 dark:text-cyan-400">
                   <FileText className="w-6 h-6" />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-sm font-semibold text-white truncate">{activeResume.fileName || 'Active Resume'}</h4>
-                  <span className="text-xs text-emerald-400 flex items-center gap-1 mt-0.5">
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white truncate">{activeResume.fileName || 'Active Resume'}</h4>
+                  <span className="text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-0.5">
                     <CheckCircle className="w-3.5 h-3.5" />
                     Currently active on public website
                   </span>
@@ -114,14 +114,14 @@ export const ResumeManager: React.FC = () => {
                 href={activeResume.fileUrl || '/resume.pdf'}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-neutral-700 hover:bg-neutral-600 text-white text-xs font-semibold transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-700 dark:bg-neutral-700 hover:bg-slate-600 dark:hover:bg-neutral-600 text-white text-xs font-semibold transition-colors"
               >
                 <span>View</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-neutral-800/40 border border-neutral-800 text-neutral-400 text-sm">
+            <div className="p-4 rounded-xl bg-slate-100/60 dark:bg-neutral-800/40 border border-slate-200 dark:border-neutral-800 text-slate-500 dark:text-neutral-400 text-sm">
               Default system resume is currently active (/resume.pdf).
             </div>
           )}

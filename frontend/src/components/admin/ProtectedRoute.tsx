@@ -14,7 +14,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center text-white">
+      <div className="min-h-screen bg-slate-50 dark:bg-neutral-950 flex flex-col items-center justify-center text-slate-900 dark:text-white">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
@@ -22,7 +22,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         >
           <Loader2 className="w-9 h-9" />
         </motion.div>
-        <p className="text-neutral-400 text-sm font-medium tracking-wide">
+        <p className="text-slate-500 dark:text-neutral-400 text-sm font-medium tracking-wide">
           Verifying security credentials...
         </p>
       </div>

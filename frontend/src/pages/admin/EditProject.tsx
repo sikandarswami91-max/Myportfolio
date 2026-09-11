@@ -39,8 +39,8 @@ export const EditProject: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         {loading ? (
           <div className="py-24 flex flex-col items-center justify-center gap-3">
-            <Loader2 className="w-8 h-8 text-cyan-400 animate-spin" />
-            <p className="text-sm text-neutral-400">Loading project data...</p>
+            <Loader2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400 animate-spin" />
+            <p className="text-sm text-slate-500 dark:text-neutral-400">Loading project data...</p>
           </div>
         ) : initialData ? (
           <ProjectForm initialData={initialData} isEditing={true} />

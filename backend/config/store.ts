@@ -303,6 +303,31 @@ export const Repository = {
     return newAdmin;
   },
 
+  async updateAdminPassword(email: string, hashedPassword: string) {
+    const dbStatus = getDBStatus();
+    const cleanEmail = email.toLowerCase().trim();
+    if (dbStatus.isConnected) {
+      try {
+        const updated = await (Admin as any).findOneAndUpdate(
+          { email: cleanEmail },
+          { password: hashedPassword, updatedAt: new Date() },
+          { new: true }
+        );
+        if (updated) return updated;
+      } catch (e) {
+        // Fallback to local store
+      }
+    }
+    const admin = inMemoryAdmins.find((a) => a.email === cleanEmail);
+    if (admin) {
+      admin.password = hashedPassword;
+      admin.updatedAt = new Date();
+      persistLocalStore();
+      return admin;
+    }
+    return null;
+  },
+
   // Project Operations
   async getPublicProjects() {
     const dbStatus = getDBStatus();

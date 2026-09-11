@@ -41,32 +41,32 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative w-full max-w-md bg-neutral-900 border border-neutral-800 rounded-3xl p-6 shadow-2xl z-10"
+            className="relative w-full max-w-md bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 rounded-3xl p-6 shadow-2xl z-10"
           >
             {/* Close Button */}
             {!isDeleting && (
               <button
                 onClick={onCancel}
-                className="absolute top-4 right-4 p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-xl text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
 
             {/* Warning Icon */}
-            <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 flex items-center justify-center mb-4">
               <AlertTriangle className="w-6 h-6" />
             </div>
 
             {/* Content */}
-            <h3 className="text-xl font-bold font-heading text-white tracking-tight mb-2">
+            <h3 className="text-xl font-bold font-heading text-slate-900 dark:text-white tracking-tight mb-2">
               {title}
             </h3>
 
-            <p className="text-sm text-neutral-400 mb-6 leading-relaxed">
+            <p className="text-sm text-slate-500 dark:text-neutral-400 mb-6 leading-relaxed">
               Are you sure you want to permanently delete{' '}
               {itemName ? (
-                <span className="text-white font-semibold underline decoration-neutral-700">
+                <span className="text-slate-900 dark:text-white font-semibold underline decoration-slate-300 dark:decoration-neutral-700">
                   "{itemName}"
                 </span>
               ) : (
@@ -81,7 +81,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
                 type="button"
                 onClick={onCancel}
                 disabled={isDeleting}
-                className="px-4 py-2.5 rounded-xl text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>

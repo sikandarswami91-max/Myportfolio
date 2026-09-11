@@ -35,28 +35,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
   ];
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-neutral-900 border-r border-neutral-800 text-neutral-200">
+    <div className="flex flex-col h-full bg-white dark:bg-neutral-900 border-r border-slate-200 dark:border-neutral-800 text-slate-700 dark:text-neutral-200">
       {/* Brand Header */}
-      <div className="h-16 px-6 border-b border-neutral-800 flex items-center justify-between">
+      <div className="h-16 px-6 border-b border-slate-200 dark:border-neutral-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
             S
           </div>
           <div>
-            <div className="font-heading font-bold text-white tracking-tight text-sm flex items-center gap-1.5">
+            <div className="font-heading font-bold text-slate-900 dark:text-white tracking-tight text-sm flex items-center gap-1.5">
               <span>Sikandar</span>
-              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
                 Admin
               </span>
             </div>
-            <div className="text-[11px] text-neutral-400">Control Center</div>
+            <div className="text-[11px] text-slate-500 dark:text-neutral-400">Control Center</div>
           </div>
         </div>
 
         {/* Mobile close button */}
         <button
           onClick={onCloseMobile}
-          className="lg:hidden p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+          className="lg:hidden p-1.5 rounded-lg text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -64,7 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
 
       {/* Navigation Links */}
       <div className="flex-1 py-6 px-4 space-y-1.5 overflow-y-auto">
-        <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+        <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
           Management
         </div>
 
@@ -77,10 +77,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
               end={item.path === '/admin/projects' || item.path === '/admin/dashboard'}
               onClick={onCloseMobile}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+                `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
                   isActive
-                    ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 font-semibold'
-                    : 'text-neutral-400 hover:text-white hover:bg-neutral-800/60'
+                    ? 'bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-pink-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/20 dark:border-cyan-500/30 font-semibold shadow-sm'
+                    : 'text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-neutral-800/60 border border-transparent'
                 }`
               }
             >
@@ -88,7 +88,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
                 <>
                   <Icon
                     className={`w-4 h-4 transition-transform group-hover:scale-110 ${
-                      isActive ? 'text-cyan-400' : 'text-neutral-400 group-hover:text-white'
+                      isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500 dark:text-neutral-400 group-hover:text-slate-900 dark:group-hover:text-white'
                     }`}
                   />
                   <span>{item.label}</span>
@@ -98,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
           );
         })}
 
-        <div className="pt-6 px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+        <div className="pt-6 px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-neutral-500">
           Portfolio
         </div>
 
@@ -106,33 +106,33 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onCloseMobile }) =
           href="/"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-neutral-400 hover:text-white hover:bg-neutral-800/60 transition-colors group"
+          className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-neutral-800/60 transition-colors group"
         >
           <span className="flex items-center gap-3">
-            <ExternalLink className="w-4 h-4 text-neutral-400 group-hover:text-cyan-400" />
+            <ExternalLink className="w-4 h-4 text-slate-500 dark:text-neutral-400 group-hover:text-cyan-400" />
             <span>View Public Site</span>
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-400 group-hover:text-white">
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-neutral-800 text-slate-500 dark:text-neutral-400 group-hover:text-slate-900 dark:group-hover:text-white">
             Live
           </span>
         </a>
       </div>
 
       {/* User Info & Logout Footer */}
-      <div className="p-4 border-t border-neutral-800 bg-neutral-950/50">
-        <div className="p-3 rounded-xl bg-neutral-900/80 border border-neutral-800 mb-3">
+      <div className="p-4 border-t border-slate-200 dark:border-neutral-800 bg-slate-50/50 dark:bg-neutral-950/50">
+        <div className="p-3 rounded-xl bg-white/80 dark:bg-neutral-900/80 border border-slate-200 dark:border-neutral-800 mb-3">
           <div className="flex items-center gap-2.5 mb-1.5">
-            <ShieldCheck className="w-4 h-4 text-cyan-400" />
-            <span className="text-xs font-semibold text-white">Authenticated Session</span>
+            <ShieldCheck className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <span className="text-xs font-semibold text-slate-900 dark:text-white">Authenticated Session</span>
           </div>
-          <p className="text-[11px] text-neutral-400 truncate" title={admin?.email}>
+          <p className="text-[11px] text-slate-500 dark:text-neutral-400 truncate" title={admin?.email}>
             {admin?.email || 'admin@portfolio.com'}
           </p>
         </div>
 
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 border border-transparent transition-all"
+          className="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 border border-transparent transition-all"
         >
           <LogOut className="w-4 h-4" />
           <span>Sign Out</span>

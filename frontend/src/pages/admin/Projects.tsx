@@ -93,20 +93,20 @@ export const Projects: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex flex-1 items-center gap-3 max-w-md">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-neutral-500 absolute left-3.5 top-3" />
+              <Search className="w-4 h-4 text-slate-400 dark:text-neutral-500 absolute left-3.5 top-3" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search projects..."
-                className="w-full pl-10 pr-4 py-2 text-sm rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-cyan-500"
+                className="w-full pl-10 pr-4 py-2 text-sm rounded-xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 text-slate-900 dark:text-white placeholder-neutral-500 focus:outline-none focus:border-cyan-500"
               />
             </div>
 
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="py-2 px-3 text-sm rounded-xl bg-neutral-900 border border-neutral-800 text-white focus:outline-none focus:border-cyan-500"
+              className="py-2 px-3 text-sm rounded-xl bg-white dark:bg-neutral-900 border border-slate-200 dark:border-neutral-800 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500"
             >
               <option value="all">All Categories</option>
               <option value="Full-Stack MERN">Full-Stack MERN</option>
@@ -127,20 +127,20 @@ export const Projects: React.FC = () => {
         {/* Project Cards Grid */}
         {loading ? (
           <div className="py-20 flex flex-col items-center justify-center gap-3">
-            <Loader2 className="w-8 h-8 text-cyan-400 animate-spin" />
-            <p className="text-sm text-neutral-400">Loading catalog...</p>
+            <Loader2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400 animate-spin" />
+            <p className="text-sm text-slate-500 dark:text-neutral-400">Loading catalog...</p>
           </div>
         ) : filteredProjects.length === 0 ? (
-          <div className="p-12 text-center rounded-2xl border border-dashed border-neutral-800 bg-neutral-900/30">
-            <AlertCircle className="w-10 h-10 text-neutral-500 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-white">No projects found</h3>
-            <p className="text-sm text-neutral-400 mt-1">Try adjusting your search query or category filters.</p>
+          <div className="p-12 text-center rounded-2xl border border-dashed border-slate-200 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/30">
+            <AlertCircle className="w-10 h-10 text-slate-400 dark:text-neutral-500 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-slate-900 dark:text-white">No projects found</h3>
+            <p className="text-sm text-slate-500 dark:text-neutral-400 mt-1">Try adjusting your search query or category filters.</p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/40">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/40 shadow-sm">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-neutral-800 text-xs uppercase tracking-wider text-neutral-500">
+                <tr className="border-b border-slate-200 dark:border-neutral-800 text-xs uppercase tracking-wider text-slate-400 dark:text-neutral-500">
                   <th className="py-3 px-4 sm:px-6 font-semibold">Project</th>
                   <th className="py-3 px-4 hidden md:table-cell font-semibold">Category</th>
                   <th className="py-3 px-4 font-semibold">Status</th>

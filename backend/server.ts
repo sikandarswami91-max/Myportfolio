@@ -100,8 +100,8 @@ export async function startBackendServer(port: number | string = PORT) {
 
   const numericPort = typeof port === 'string' ? parseInt(port, 10) : port;
 
-  return app.listen(numericPort, '0.0.0.0', () => {
-    console.log(`🚀 Backend API Server running at http://0.0.0.0:${numericPort}`);
+  return app.listen(numericPort, 'localhost', () => {
+    console.log(`🚀 Backend API Server running at http://localhost: ${numericPort}`);
   });
 }
 
