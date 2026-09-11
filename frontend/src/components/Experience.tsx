@@ -34,7 +34,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
           <p className={`mt-4 text-base sm:text-lg ${
             isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
           }`}>
-            Real-world enterprise exposure to software reliability, inventory tracking, and operational efficiency.
+            Real-world full stack development experience building and maintaining web applications with modern frontend and backend technologies.
           </p>
         </motion.div>
 

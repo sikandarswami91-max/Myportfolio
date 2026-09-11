@@ -4,25 +4,65 @@ import axios from 'axios';
 import { Request, Response } from 'express';
 import { Repository } from '../config/store';
 import { uploadPDFToCloudinary, deleteFromCloudinary } from '../config/cloudinary';
+import { generateResumePdf } from '../services/resumePdfService';
+
+// Required download filename for the public resume
+const RESUME_FILE_NAME = 'Sikandar_Bharti_Resume.pdf';
+
+const setPdfHeaders = (res: Response, byteLength: number) => {
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', `attachment; filename="${RESUME_FILE_NAME}"`);
+  res.setHeader('Content-Length', String(byteLength));
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+};
+
+// Fallback: dynamically generated, always-available professional PDF resume
+const sendGeneratedResume = async (res: Response): Promise<void> => {
+  const pdfBytes = await generateResumePdf();
+  const buffer = Buffer.from(pdfBytes);
+  setPdfHeaders(res, buffer.length);
+  res.end(buffer);
+};
 
 // PUBLIC API: Download active resume file as an attachment
 export const downloadResumeFile = async (req: Request, res: Response): Promise<void> => {
   try {
     const resume = await Repository.getLatestResume();
-    const fileName = resume?.fileName || 'Sikandar_Swami_Resume.pdf';
     const fileUrl = resume?.fileUrl || '/resume.pdf';
 
-    // If hosted on Cloudinary or external HTTPS URL
+    // Uploaded resume stored as a base64 Data URI (local dev fallback when
+    // Cloudinary is not configured) — decode and serve the EXACT uploaded bytes.
+    if (fileUrl.startsWith('data:')) {
+      const isPdf = fileUrl.slice(0, 60).toLowerCase().includes('application/pdf');
+      if (isPdf) {
+        const base64 = fileUrl.slice(fileUrl.indexOf(',') + 1);
+        const buffer = Buffer.from(base64, 'base64');
+        setPdfHeaders(res, buffer.length);
+        res.end(buffer);
+        return;
+      }
+      // Data URI is not a PDF record — fall through to generated fallback
+      await sendGeneratedResume(res);
+      return;
+    }
+
+    // If hosted on Cloudinary or external HTTPS URL, stream it as a PDF attachment.
+    // On any failure we fall back to the generated PDF instead of redirecting
+    // (a redirect loses the attachment headers and can yield HTML responses).
     if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
       try {
-        const response = await axios.get(fileUrl, { responseType: 'stream' });
-        res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(fileName)}"`);
-        res.setHeader('Content-Type', 'application/pdf');
-        response.data.pipe(res);
+        const response = await axios.get(fileUrl, { responseType: 'arraybuffer', timeout: 20000 });
+        const contentType = String(response.headers['content-type'] || 'application/pdf');
+        const buffer = Buffer.from(response.data as ArrayBuffer);
+        setPdfHeaders(res, buffer.length);
+        if (contentType.startsWith('application/pdf')) {
+          res.setHeader('Content-Type', contentType);
+        }
+        res.end(buffer);
         return;
       } catch (streamErr: any) {
-        console.warn('Failed streaming external resume, redirecting:', streamErr.message);
-        res.redirect(fileUrl);
+        console.warn('Failed fetching external resume, serving generated PDF:', streamErr.message);
+        await sendGeneratedResume(res);
         return;
       }
     }
@@ -31,24 +71,25 @@ export const downloadResumeFile = async (req: Request, res: Response): Promise<v
     const localPdfPath = path.join(process.cwd(), 'public', 'resume.pdf');
     if (fs.existsSync(localPdfPath)) {
       const stat = fs.statSync(localPdfPath);
-      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"; filename*=UTF-8''${encodeURIComponent(fileName)}`);
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Length', stat.size);
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      setPdfHeaders(res, stat.size);
       fs.createReadStream(localPdfPath).pipe(res);
       return;
     }
 
-    res.status(404).json({
-      success: false,
-      message: 'Resume file not found.',
-    });
+    // No uploaded/default resume available — generate a genuine PDF on the fly.
+    // Never return a JSON/HTML error here (that is what caused .htm downloads).
+    await sendGeneratedResume(res);
   } catch (error: any) {
     console.error('Error downloading resume:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to download resume file.',
-    });
+    try {
+      // Last-resort fallback so the user always receives a valid PDF
+      await sendGeneratedResume(res);
+    } catch (genErr) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to download resume file.',
+      });
+    }
   }
 };
 

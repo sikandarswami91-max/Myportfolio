@@ -120,10 +120,10 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
               <motion.a
                 id="hero-download-resume-btn"
                 href="/api/resume/download"
-                download="Sikandar_Swami_Resume.pdf"
+                download="Sikandar_Bharti_Resume.pdf"
                 onClick={(e) => {
                   e.preventDefault();
-                  downloadResumeFile('Sikandar_Swami_Resume.pdf', '/api/resume/download');
+                  downloadResumeFile('Sikandar_Bharti_Resume.pdf', '/api/resume/download');
                 }}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}

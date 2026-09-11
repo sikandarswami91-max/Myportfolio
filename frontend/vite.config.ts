@@ -13,6 +13,14 @@ export default defineConfig(() => {
     },
     server: {
       port: 5173,
+      // Proxy API requests to the Express backend so the frontend dev server
+      // (npm run dev inside frontend/) can reach /api/* without CORS issues.
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+        },
+      },
     },
     build: {
       rollupOptions: {

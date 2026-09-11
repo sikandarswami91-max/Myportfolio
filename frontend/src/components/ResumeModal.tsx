@@ -62,7 +62,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose, theme
     if (isDownloading) return;
     setIsDownloading(true);
     try {
-      await downloadResumeFile(downloadFileName, '/api/resume/download');
+      await downloadResumeFile('Sikandar_Bharti_Resume.pdf', '/api/resume/download');
     } catch (err) {
       console.error('Download error:', err);
     } finally {

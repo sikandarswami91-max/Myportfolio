@@ -192,18 +192,20 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
-    company: 'V MART',
+    company: 'PROCOTECH TECHNOLOGY',
     duration: '6 Months Experience',
-    role: 'Operations & Digital Systems Associate',
-    location: 'India',
-    description: 'Contributed to daily retail inventory systems, digital tracking, and customer experience operations, gaining practical enterprise exposure to large-scale data workflows and software usability.',
+    role: 'Full Stack Developer',
+    location: 'Lucknow, Uttar Pradesh, India',
+    description: 'Worked as a Full Stack Developer, contributing to the development and maintenance of web applications using modern frontend and backend technologies. Collaborated with the development team to build responsive interfaces, implement backend functionality, integrate APIs, and troubleshoot application issues.',
     responsibilities: [
-      'Supported digital retail management tools and inventory catalog synchronization across sales channels.',
-      'Analyzed point-of-sale data patterns to improve product categorization and stock replenishment accuracy.',
-      'Collaborated with operational teams to streamline customer record queries and resolve system discrepancies.',
-      'Applied systematic troubleshooting methodologies to maintain seamless frontline retail software uptime.',
+      'Developed responsive and user-friendly web interfaces using React.js and modern frontend technologies.',
+      'Built and integrated backend APIs using Node.js and Express.js.',
+      'Worked with MongoDB for database management, data handling, and CRUD operations.',
+      'Implemented authentication, API integration, form handling, and application functionality.',
+      'Debugged frontend and backend issues and improved application performance and usability.',
+      'Collaborated with team members to develop, test, and maintain web application features.',
     ],
-    skills: ['Operations Management', 'Inventory Systems', 'Data Tracking', 'System Troubleshooting', 'Cross-functional Collaboration'],
+    skills: ['React.js', 'JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'REST APIs', 'Git & GitHub', 'Full Stack Development'],
   },
 ];
 
