@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, type Variants } from 'motion/react';
 import { ArrowRight, Download, Github, Terminal, Sparkles, CheckCircle2, Code, Database, Server, Cpu } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ThemeMode } from '../types';
@@ -21,7 +21,7 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 22 },
     visible: {
       opacity: 1,

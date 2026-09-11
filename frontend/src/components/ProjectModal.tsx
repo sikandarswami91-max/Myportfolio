@@ -121,7 +121,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                     Key Architectural Highlights
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    {project.highlights.map((highlight, idx) => (
+                    {(project.highlights ?? []).map((highlight, idx) => (
                       <div
                         key={idx}
                         className={`p-2.5 rounded-md text-xs font-medium border ${
@@ -143,7 +143,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
                     Core Functionality & Deliverables
                   </h4>
                   <ul className="space-y-2">
-                    {project.features.map((feat, idx) => (
+                    {(project.features ?? []).map((feat, idx) => (
                       <li key={idx} className={`flex items-start gap-2 text-xs sm:text-sm ${
                         isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
                       }`}>

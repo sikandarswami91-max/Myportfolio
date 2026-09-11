@@ -33,12 +33,14 @@ interface ProjectCardProps {
   project: AdminProjectItem;
   onDelete: (project: AdminProjectItem) => void;
   onTogglePublish: (project: AdminProjectItem) => void;
+  onToggleFeatured: (project: AdminProjectItem) => void;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onDelete,
   onTogglePublish,
+  onToggleFeatured,
 }) => {
   const projectId = project._id || project.id || '';
   const formattedDate = new Date(project.createdAt).toLocaleDateString('en-US', {

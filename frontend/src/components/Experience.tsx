@@ -108,7 +108,7 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
                   }`}>
                     Key Contributions & Responsibilities
                   </div>
-                  {exp.responsibilities.map((resp, i) => (
+                  {(exp.responsibilities ?? []).map((resp, i) => (
                     <div key={i} className={`flex items-start gap-2.5 text-xs sm:text-sm ${
                       isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
                     }`}>

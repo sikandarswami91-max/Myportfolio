@@ -11,7 +11,7 @@ interface AuthContextType {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (token: string, admin: AdminUser) => void;
+  login: (email: string, password: string) => Promise<AdminUser>;
   logout: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -69,11 +69,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const login = (newToken: string, newAdmin: AdminUser) => {
+  const login = async (email: string, password: string): Promise<AdminUser> => {
+    // Calls the backend login API (POST /api/auth/login), then persists the
+    // JWT token and admin profile so ProtectedRoute grants access.
+    const response = await api.post('/api/auth/login', { email, password });
+
+    if (!response.data?.success || !response.data.token) {
+      throw new Error(response.data?.message || 'Login failed');
+    }
+
+    const newToken: string = response.data.token;
+    const newAdmin: AdminUser = {
+      id: response.data.admin?.id || '',
+      email: response.data.admin?.email || email,
+    };
+
     localStorage.setItem('admin_token', newToken);
     localStorage.setItem('admin_user', JSON.stringify(newAdmin));
     setToken(newToken);
     setAdmin(newAdmin);
+    return newAdmin;
   };
 
   const logout = async () => {

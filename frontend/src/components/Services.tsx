@@ -6,7 +6,7 @@ import { ThemeMode } from '../types';
 
 interface ServicesProps {
   theme: ThemeMode;
-  onContactClick: () => void;
+  onContactClick?: () => void;
 }
 
 const SERVICE_ICONS: Record<string, React.FC<{ className?: string }>> = {

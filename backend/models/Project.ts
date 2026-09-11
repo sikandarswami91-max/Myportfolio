@@ -101,8 +101,8 @@ const ProjectSchema = new Schema<IProject>(
   }
 );
 
-// Index for fast search and slug lookups
-ProjectSchema.index({ slug: 1 });
+// Index for fast list queries. The { slug: 1 } index is created implicitly by
+// the "unique: true" option on the slug field, so it is not declared again here.
 ProjectSchema.index({ published: 1, featured: -1, createdAt: -1 });
 
 export const Project = mongoose.models.Project || mongoose.model<IProject>('Project', ProjectSchema);

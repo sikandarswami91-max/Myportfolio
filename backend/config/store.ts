@@ -1,10 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import { Project, IProject } from '../models/Project';
 import { Resume, IResume } from '../models/Resume';
 import { Admin, IAdmin } from '../models/Admin';
 import { getDBStatus } from './db';
+
+// ES module-compatible __filename and __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Store location prioritized in backend/data/store.json
 const getStoreFilePath = (): string => {

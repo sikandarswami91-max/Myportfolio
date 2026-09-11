@@ -165,7 +165,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                         <div className={`space-y-1.5 text-[11px] ${
                           isDark ? 'text-[#E2E8F0]' : 'text-neutral-600'
                         }`}>
-                          {project.highlights.slice(0, 2).map((h, i) => (
+                          {(project.highlights ?? []).slice(0, 2).map((h, i) => (
                             <div key={i} className="flex items-center gap-1.5">
                               <Check className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
                               <span className="truncate">{h}</span>

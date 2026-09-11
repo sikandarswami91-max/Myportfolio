@@ -14,5 +14,19 @@ export default defineConfig(() => {
     server: {
       port: 5173,
     },
+    build: {
+      rollupOptions: {
+        output: {
+          // Split third-party dependencies into a separate vendor chunk:
+          // smaller parallel downloads, better cache invalidation, and
+          // resolves Vite's 500 kB chunk-size warning.
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
+        },
+      },
+    },
   };
 });

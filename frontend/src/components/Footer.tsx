@@ -6,6 +6,7 @@ import { ThemeMode } from '../types';
 
 interface FooterProps {
   theme: ThemeMode;
+  onOpenResume?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ theme }) => {

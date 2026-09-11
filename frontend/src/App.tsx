@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { ProtectedRoute } from './components/admin/ProtectedRoute';
+import { PageLoader } from './components/PageLoader';
 
-// Public Pages
+// Public Pages — PublicHome is eager so the landing page paints immediately
 import { PublicHome } from './pages/PublicHome';
-import { ProjectDetails } from './pages/ProjectDetails';
-import { NotFound } from './pages/NotFound';
 
-// Admin Pages
-import { AdminLogin } from './pages/admin/AdminLogin';
-import { Dashboard } from './pages/admin/Dashboard';
-import { Projects } from './pages/admin/Projects';
-import { AddProject } from './pages/admin/AddProject';
-import { EditProject } from './pages/admin/EditProject';
-import { ResumeManager } from './pages/admin/ResumeManager';
+// Public Pages (code-split — each route loads its own chunk on demand)
+const ProjectDetails = lazy(() =>
+  import('./pages/ProjectDetails').then((m) => ({ default: m.ProjectDetails }))
+);
+const NotFound = lazy(() =>
+  import('./pages/NotFound').then((m) => ({ default: m.NotFound }))
+);
+
+// Admin Pages (code-split — public visitors never download the admin system)
+const AdminLogin = lazy(() =>
+  import('./pages/admin/AdminLogin').then((m) => ({ default: m.AdminLogin }))
+);
+const Dashboard = lazy(() =>
+  import('./pages/admin/Dashboard').then((m) => ({ default: m.Dashboard }))
+);
+const AdminProjects = lazy(() =>
+  import('./pages/admin/Projects').then((m) => ({ default: m.Projects }))
+);
+const AddProject = lazy(() =>
+  import('./pages/admin/AddProject').then((m) => ({ default: m.AddProject }))
+);
+const EditProject = lazy(() =>
+  import('./pages/admin/EditProject').then((m) => ({ default: m.EditProject }))
+);
+const ResumeManager = lazy(() =>
+  import('./pages/admin/ResumeManager').then((m) => ({ default: m.ResumeManager }))
+);
 
 export default function App() {
   return (
     <AuthProvider>
       <ToastProvider>
         <BrowserRouter>
-          <Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
             {/* Public Portfolio Routes */}
             <Route path="/" element={<PublicHome />} />
             <Route path="/about" element={<PublicHome />} />
@@ -52,7 +72,7 @@ export default function App() {
               path="/admin/projects"
               element={
                 <ProtectedRoute>
-                  <Projects />
+                  <AdminProjects />
                 </ProtectedRoute>
               }
             />
@@ -86,7 +106,8 @@ export default function App() {
 
             {/* 404 Not Found Fallback */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </ToastProvider>
     </AuthProvider>

@@ -137,23 +137,37 @@ export const Projects: React.FC = () => {
             <p className="text-sm text-neutral-400 mt-1">Try adjusting your search query or category filters.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project._id || project.id}
-                project={project}
-                onDelete={() => {
-                  setProjectToDelete(project);
-                  setDeleteModalOpen(true);
-                }}
-                onTogglePublish={() =>
-                  handleTogglePublish(project._id || project.id!, project.published !== false)
-                }
-                onToggleFeatured={() =>
-                  handleToggleFeatured(project._id || project.id!, !!project.featured)
-                }
-              />
-            ))}
+          <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/40">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-neutral-800 text-xs uppercase tracking-wider text-neutral-500">
+                  <th className="py-3 px-4 sm:px-6 font-semibold">Project</th>
+                  <th className="py-3 px-4 hidden md:table-cell font-semibold">Category</th>
+                  <th className="py-3 px-4 font-semibold">Status</th>
+                  <th className="py-3 px-4 hidden lg:table-cell font-semibold">Featured</th>
+                  <th className="py-3 px-4 hidden sm:table-cell font-semibold">Created</th>
+                  <th className="py-3 px-4 sm:px-6 text-right font-semibold">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredProjects.map((project) => (
+                  <ProjectCard
+                    key={project._id || project.id}
+                    project={project}
+                    onDelete={() => {
+                      setProjectToDelete(project);
+                      setDeleteModalOpen(true);
+                    }}
+                    onTogglePublish={() =>
+                      handleTogglePublish(project._id || project.id!, project.published !== false)
+                    }
+                    onToggleFeatured={() =>
+                      handleToggleFeatured(project._id || project.id!, !!project.featured)
+                    }
+                  />
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>

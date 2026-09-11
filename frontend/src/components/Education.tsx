@@ -85,7 +85,7 @@ export const Education: React.FC<EducationProps> = ({ theme }) => {
                   Key Coursework & Academic Focus
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {edu.highlights.map((item, i) => (
+                  {(edu.highlights ?? []).map((item, i) => (
                     <div
                       key={i}
                       className={`p-3 rounded-xl border flex items-start gap-2.5 text-xs sm:text-sm text-neutral-700 dark:text-neutral-200 ${

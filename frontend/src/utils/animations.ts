@@ -1,4 +1,6 @@
-export const fadeIn = {
+import type { Variants } from 'motion/react';
+
+export const fadeIn: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
@@ -7,7 +9,7 @@ export const fadeIn = {
   },
 };
 
-export const scaleIn = {
+export const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -21,7 +23,7 @@ export const scaleIn = {
   },
 };
 
-export const staggerContainer = {
+export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -30,3 +32,4 @@ export const staggerContainer = {
     },
   },
 };
+

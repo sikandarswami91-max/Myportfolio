@@ -93,10 +93,17 @@ export async function startBackendServer(port: number | string = PORT) {
   });
 }
 
-// Auto-run if executed directly (e.g., node backend/server.ts or tsx backend/server.ts)
-const isDirectExecution = process.argv[1] && (
-  process.argv[1].endsWith('backend/server.ts') ||
-  process.argv[1].endsWith('backend/server.js')
+// Auto-run if executed directly (e.g., tsx server.ts / node backend/server.ts).
+// Path-resolved comparison so it works on Windows (backslashes) and when the
+// script is invoked with a relative or absolute path, while still NOT auto-running
+// when this module is imported by another entry (e.g., the unified root server).
+const currentModulePath = path.resolve(fileURLToPath(import.meta.url));
+const entryScriptPath = process.argv[1] ? path.resolve(process.argv[1]) : '';
+const isDirectExecution = Boolean(
+  entryScriptPath &&
+    (entryScriptPath === currentModulePath ||
+      entryScriptPath.endsWith('backend/server.ts') ||
+      entryScriptPath.endsWith('backend/server.js'))
 );
 
 if (isDirectExecution) {
