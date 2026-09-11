@@ -18,7 +18,7 @@ import { ThemeMode, Project } from '../types';
 export const PublicHome: React.FC = () => {
   const [theme, setTheme] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('theme');
-    return (saved === 'light' || saved === 'dark') ? saved : 'dark';
+    return (saved === 'light' || saved === 'dark') ? saved : 'light';
   });
 
   const [resumeOpen, setResumeOpen] = useState(false);

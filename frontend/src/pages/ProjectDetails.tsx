@@ -27,7 +27,7 @@ export const ProjectDetails: React.FC = () => {
   const [resumeOpen, setResumeOpen] = useState<boolean>(false);
   const [theme, setTheme] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('theme');
-    return (saved === 'light' || saved === 'dark') ? saved : 'dark';
+    return (saved === 'light' || saved === 'dark') ? saved : 'light';
   });
 
   const isDark = theme === 'dark';
