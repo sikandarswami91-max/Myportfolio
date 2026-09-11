@@ -27,10 +27,22 @@ async function startServer() {
   // Production-ready CORS middleware
   app.use((req, res, next) => {
     const origin = req.headers.origin;
-    const configuredClients = (process.env.CLIENT_URL || '')
-      .split(',')
-      .map((u) => u.trim())
-      .filter(Boolean);
+    const configuredClients = [
+      ...new Set(
+        [
+          // Production frontend URL (Render deployment)
+          process.env.FRONTEND_URL,
+          // Legacy/alternative variable name kept for backwards compatibility
+          process.env.CLIENT_URL,
+          // Always allow local Vite dev server
+          'http://localhost:5173',
+        ]
+          .filter((u): u is string => typeof u === 'string')
+          .flatMap((u) => u.split(','))
+          .map((u) => u.trim().replace(/\/+$/, ''))
+          .filter(Boolean)
+      ),
+    ];
 
     if (configuredClients.length > 0) {
       if (origin && (configuredClients.includes(origin) || configuredClients.includes('*'))) {
