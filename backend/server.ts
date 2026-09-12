@@ -100,8 +100,10 @@ export async function startBackendServer(port: number | string = PORT) {
 
   const numericPort = typeof port === 'string' ? parseInt(port, 10) : port;
 
-  return app.listen(numericPort, 'localhost', () => {
-    console.log(`🚀 Backend API Server running at http://localhost: ${numericPort}`);
+  // Bind to 0.0.0.0 so hosting platforms (Render, etc.) can detect the port.
+  // Localhost access still works locally because 0.0.0.0 includes the loopback interface.
+  return app.listen(numericPort, '0.0.0.0', () => {
+    console.log(`🚀 Backend API Server listening on 0.0.0.0:${numericPort}`);
   });
 }
 
