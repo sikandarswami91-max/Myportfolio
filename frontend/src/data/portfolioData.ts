@@ -16,6 +16,21 @@ export const PERSONAL_INFO = {
   projectsCompleted: '10+ Web Projects Built',
 };
 
+/* ------------------------------------------------------------------ */
+/* WhatsApp Click-to-Chat (single source of truth)                     */
+/* - Number in international wa.me format: no '+', spaces, brackets,   */
+/*   or hyphens (display number above is human-readable only)          */
+/* - Message is URL-encoded exactly once, here                         */
+/* - Import WHATSAPP_URL wherever a WhatsApp contact action is needed  */
+/* ------------------------------------------------------------------ */
+export const WHATSAPP_NUMBER = '919198431459';
+export const WHATSAPP_MESSAGE =
+  'Hello, I visited your portfolio and would like to discuss a project.';
+
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  WHATSAPP_MESSAGE
+)}`;
+
 export const SKILLS: Skill[] = [
   {
     name: 'React.js',

@@ -176,7 +176,18 @@ export const AdminLogin: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  autoComplete="new-password"
+                  // Mobile keyboards/autofill can mutate or replace the typed
+                  // value in login (password) fields without these attributes,
+                  // which makes bcrypt.compare fail with the same credentials
+                  // that work on desktop. "current-password" (NOT "new-password")
+                  // tells mobile browsers this is a sign-in field so they offer
+                  // the saved password instead of generating a new one.
+                  autoComplete="current-password"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  inputMode="text"
+                  enterKeyHint="go"
                   required
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-100/80 dark:bg-neutral-800/80 border border-slate-200 dark:border-neutral-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
                 />

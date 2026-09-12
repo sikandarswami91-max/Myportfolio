@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, Github, Linkedin, Send, Check, Copy, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
-import { PERSONAL_INFO } from '../data/portfolioData';
+import { WhatsAppIcon } from './WhatsAppIcon';
+import { PERSONAL_INFO, WHATSAPP_URL } from '../data/portfolioData';
 import { ThemeMode } from '../types';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
@@ -194,19 +195,38 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                 </div>
               </div>
 
-              <button
-                onClick={copyPhone}
-                className={`p-2 rounded-lg border transition-colors ${
-                  copiedPhone
-                    ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500'
-                    : isDark
-                    ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
-                    : 'border-neutral-200 hover:bg-neutral-100 text-neutral-600'
-                }`}
-                title="Copy Phone Number"
-              >
-                {copiedPhone ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              </button>
+              <div className="flex items-center gap-2">
+                {/* WhatsApp click-to-chat anchor (opens WhatsApp app on mobile,
+                    WhatsApp Web / wa.me page on desktop) */}
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-2 rounded-lg border transition-colors ${
+                    isDark
+                      ? 'border-neutral-700 hover:bg-neutral-800 text-[#25D366]'
+                      : 'border-neutral-200 hover:bg-neutral-100 text-[#25D366]'
+                  } focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500`}
+                  title="Chat with me on WhatsApp"
+                  aria-label="Chat with me on WhatsApp"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                </a>
+
+                <button
+                  onClick={copyPhone}
+                  className={`p-2 rounded-lg border transition-colors ${
+                    copiedPhone
+                      ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500'
+                      : isDark
+                      ? 'border-neutral-700 hover:bg-neutral-800 text-[#E2E8F0] hover:text-white'
+                      : 'border-neutral-200 hover:bg-neutral-100 text-neutral-600'
+                  }`}
+                  title="Copy Phone Number"
+                >
+                  {copiedPhone ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             {/* GitHub & LinkedIn Social Cards */}

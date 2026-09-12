@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
-import { PERSONAL_INFO } from '../data/portfolioData';
+import { WhatsAppIcon } from './WhatsAppIcon';
+import { PERSONAL_INFO, WHATSAPP_URL } from '../data/portfolioData';
 import { ThemeMode } from '../types';
 
 interface FooterProps {
@@ -80,6 +81,22 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
               aria-label="LinkedIn Profile"
             >
               <Linkedin className="w-4 h-4" />
+            </a>
+
+            {/* WhatsApp social link — matches the existing icon-button row */}
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`p-2.5 rounded-xl border transition-all hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                isDark
+                  ? 'border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-[#25D366]'
+                  : 'border-neutral-200 bg-white hover:bg-neutral-100 text-[#25D366] shadow-sm'
+              }`}
+              title="Chat with me on WhatsApp"
+              aria-label="Chat with me on WhatsApp"
+            >
+              <WhatsAppIcon className="w-4 h-4" />
             </a>
 
             <a

@@ -6,11 +6,24 @@ const getBaseURL = (): string => {
   if (!envUrl || typeof envUrl !== 'string') return '';
   const clean = envUrl.trim().replace(/\/+$/, '').replace(/\/api$/i, '');
 
-  // If in browser and not accessing from localhost (e.g. cloud preview / live domain),
-  // never send requests to a localhost/loopback address as browser blocks Private Network Access.
+  // Only reject loopback targets. Browsers block requests from a non-localhost
+  // origin (cloud preview domain, phone on LAN, production site) to
+  // localhost/127.0.0.1 via Private Network Access. Legitimate remote API
+  // URLs (e.g. https://api.onrender.com — or any http:// host on the LAN while
+  // testing on a phone) must be preserved, not silently discarded.
   if (typeof window !== 'undefined') {
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    if (!isLocalhost && (clean.includes('localhost') || clean.includes('127.0.0.1') || clean.startsWith('http://'))) {
+    const isLocalhost =
+      window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isLoopbackTarget =
+      /^(https?:\/\/)?(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i.test(clean);
+    if (!isLocalhost && isLoopbackTarget) {
+      // Safe diagnostic (no secrets): makes a silent URL fallback visible so
+      // a wrong VITE_API_URL can be spotted instead of failing as a 404/HTML
+      // response that surfaces as a generic "invalid credentials" error.
+      console.warn(
+        `[api] VITE_API_URL (${clean}) targets loopback but the app is served ` +
+          `from ${window.location.origin}; falling back to relative /api.`
+      );
       return '';
     }
   }

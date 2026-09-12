@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
 import { About } from '../components/About';
@@ -13,6 +14,8 @@ import { Footer } from '../components/Footer';
 import { ResumeModal } from '../components/ResumeModal';
 import { ProjectModal } from '../components/ProjectModal';
 import { BackgroundEffects } from '../components/BackgroundEffects';
+import { WhatsAppIcon } from '../components/WhatsAppIcon';
+import { WHATSAPP_URL } from '../data/portfolioData';
 import { ThemeMode, Project } from '../types';
 
 export const PublicHome: React.FC = () => {
@@ -107,6 +110,28 @@ export const PublicHome: React.FC = () => {
       </main>
 
       <Footer theme={theme} onOpenResume={() => setResumeOpen(true)} />
+
+      {/* Single floating WhatsApp click-to-chat button (public pages only).
+          - z-40: beneath the navbar/toasts/modals (z-50), above page content
+          - bottom-right 48px touch target (meets 44px minimum on mobile)
+          - toast container is pointer-events-none, so taps pass through
+          - wa.me opens the WhatsApp app on mobile, web handler on desktop */}
+      <motion.a
+        id="floating-whatsapp-btn"
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.6, duration: 0.3 }}
+        whileHover={{ scale: 1.06 }}
+        whileTap={{ scale: 0.94 }}
+        className="fixed bottom-5 right-5 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-[#25D366] hover:bg-[#1FB855] text-white shadow-xl shadow-[#25D366]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+        title="Chat with me on WhatsApp"
+        aria-label="Chat with me on WhatsApp"
+      >
+        <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+      </motion.a>
 
       {/* Interactive Modals */}
       <ResumeModal
