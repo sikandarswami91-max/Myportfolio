@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Briefcase, Calendar, MapPin, CheckCircle2, Sparkles, Building2 } from 'lucide-react';
 import { EXPERIENCE } from '../data/portfolioData';
 import { ThemeMode } from '../types';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 interface ExperienceProps {
   theme: ThemeMode;
@@ -10,6 +11,10 @@ interface ExperienceProps {
 
 export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
   const isDark = theme === 'dark';
+  // Timeline items slide in horizontally on large screens only. On smaller
+  // viewports a horizontal offset can extend past the viewport edge and
+  // create page-wide horizontal overflow, so animate vertically there.
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return (
     <section id="experience" className="py-24 sm:py-32 relative">
@@ -46,8 +51,8 @@ export const Experience: React.FC<ExperienceProps> = ({ theme }) => {
           {EXPERIENCE.map((exp, idx) => (
             <motion.div
               key={exp.company}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: isDesktop ? -20 : 0, y: isDesktop ? 0 : 20 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.6, delay: idx * 0.15 }}
               className="relative pl-12 sm:pl-20 pb-12 last:pb-0"

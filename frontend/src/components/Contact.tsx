@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, Github, Linkedin, Send, Check, Copy, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ThemeMode } from '../types';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 interface ContactProps {
   theme: ThemeMode;
@@ -10,6 +11,9 @@ interface ContactProps {
 
 export const Contact: React.FC<ContactProps> = ({ theme }) => {
   const isDark = theme === 'dark';
+  // Keep horizontal slide-ins on large screens only; below `lg` the columns
+  // span the full viewport and a horizontal offset would overflow it.
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -98,8 +102,8 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left Column: Direct Info Cards */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: isDesktop ? -30 : 0, y: isDesktop ? 0 : 24 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6 }}
             className="lg:col-span-5 space-y-4"
@@ -125,11 +129,11 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   : 'bg-white border-neutral-200 shadow-sm'
               }`}
             >
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className={`text-xs font-medium ${
                     isDark ? 'text-[#A8B3C2]' : 'text-neutral-500'
                   }`}>
@@ -137,7 +141,7 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
                   </div>
                   <a
                     href={`mailto:${PERSONAL_INFO.email}`}
-                    className={`text-sm font-semibold transition-colors ${
+                    className={`text-sm font-semibold break-all transition-colors ${
                       isDark ? 'text-white hover:text-cyan-400' : 'text-neutral-900 hover:text-cyan-500'
                     }`}
                   >
@@ -259,8 +263,8 @@ export const Contact: React.FC<ContactProps> = ({ theme }) => {
 
           {/* Right Column: Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: isDesktop ? 30 : 0, y: isDesktop ? 0 : 24 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6 }}
             className={`lg:col-span-7 p-6 sm:p-8 rounded-3xl border ${

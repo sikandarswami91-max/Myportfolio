@@ -44,7 +44,7 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-32 pb-20 sm:pt-40 sm:pb-28 flex items-center justify-center overflow-hidden"
+      className="relative min-h-svh pt-32 pb-20 sm:pt-40 sm:pb-28 flex items-center justify-center overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -160,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({ theme, onOpenResume }) => {
             {/* Quick Metrics Strip */}
             <motion.div
               variants={itemVariants}
-              className={`mt-12 pt-8 border-t grid grid-cols-3 gap-6 sm:gap-10 ${
+              className={`mt-12 pt-8 border-t grid grid-cols-3 gap-4 sm:gap-10 ${
                 isDark ? 'border-neutral-800' : 'border-neutral-200'
               }`}
             >

@@ -93,7 +93,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       <nav
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
-          isScrolled ? 'pt-2 sm:pt-3' : 'pt-4 sm:pt-6'
+          // Constant top padding on mobile keeps the fixed navbar perfectly
+          // stable while scrolling; the desktop shrink animation is unchanged.
+          isScrolled ? 'pt-3 sm:pt-3' : 'pt-3 sm:pt-6'
         }`}
       >
         <div

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Layout, Server, Database, BrainCircuit, CheckCircle2, GraduationCap, Briefcase, Sparkles } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ThemeMode } from '../types';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 interface AboutProps {
   theme: ThemeMode;
@@ -41,6 +42,10 @@ const INFO_CARDS = [
 
 export const About: React.FC<AboutProps> = ({ theme }) => {
   const isDark = theme === 'dark';
+  // On large screens keep the original horizontal slide-in. Below `lg` the
+  // columns are full viewport width, so a horizontal offset would overflow
+  // the viewport — animate vertically instead (mobile-safe).
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return (
     <section id="about" className="py-24 sm:py-32 relative">
@@ -73,8 +78,8 @@ export const About: React.FC<AboutProps> = ({ theme }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Narrative Bio & Highlights */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: isDesktop ? -30 : 0, y: isDesktop ? 0 : 24 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
             className="lg:col-span-6 space-y-6"
@@ -143,8 +148,8 @@ export const About: React.FC<AboutProps> = ({ theme }) => {
 
           {/* Right Column: 4 Key Capability Information Cards */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: isDesktop ? 30 : 0, y: isDesktop ? 0 : 24 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
             className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4"
