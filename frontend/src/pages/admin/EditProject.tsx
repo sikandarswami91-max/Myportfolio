@@ -15,16 +15,34 @@ export const EditProject: React.FC = () => {
 
   useEffect(() => {
     const fetchProject = async () => {
+      if (!id) {
+        showToast('Project ID is missing', 'error');
+        navigate('/admin/projects');
+        return;
+      }
       try {
-        const res = await api.get(`/api/projects/${id}`);
+        // ROOT-CAUSE FIX: backend exposes the single-project admin lookup ONLY at
+        //   GET /api/admin/projects/:id
+        // (there is NO GET /api/projects/:id admin handler — that path is the
+        // PUBLIC single-project lookup by _id/slug). The old code called the
+        // public path without admin semantics, so drafts 404'd and even
+        // published ids failed before the public route existed.
+        const res = await api.get(`/api/admin/projects/${id}`);
         if (res.data?.success && res.data.data) {
           setInitialData(res.data.data);
         } else {
           showToast('Project not found', 'error');
           navigate('/admin/projects');
         }
-      } catch (err) {
-        showToast('Failed to load project details', 'error');
+      } catch (err: any) {
+        const status = err?.response?.status;
+        if (status === 401) {
+          showToast('Session expired. Please login again.', 'error');
+        } else if (status === 404) {
+          showToast('Project not found. It may have been deleted.', 'error');
+        } else {
+          showToast('Failed to load project details', 'error');
+        }
         navigate('/admin/projects');
       } finally {
         setLoading(false);
@@ -43,7 +61,11 @@ export const EditProject: React.FC = () => {
             <p className="text-sm text-slate-500 dark:text-neutral-400">Loading project data...</p>
           </div>
         ) : initialData ? (
-          <ProjectForm initialData={initialData} isEditing={true} />
+          <ProjectForm
+            key={initialData._id || id}
+            initialData={initialData}
+            isEditing={true}
+          />
         ) : null}
       </div>
     </AdminLayout>

@@ -20,7 +20,10 @@ export const Projects: React.FC = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/api/projects');
+      // Admin catalog (includes drafts + published) lives at /api/admin/projects.
+      // GET /api/projects returns ONLY published projects, so the admin table
+      // must not use it — drafts would silently disappear.
+      const res = await api.get('/api/admin/projects');
       if (res.data?.success && Array.isArray(res.data.data)) {
         setProjects(res.data.data);
       }
@@ -38,7 +41,7 @@ export const Projects: React.FC = () => {
 
   const handleTogglePublish = async (id: string, currentStatus: boolean) => {
     try {
-      await api.patch(`/api/projects/${id}/publish`, { published: !currentStatus });
+      await api.patch(`/api/admin/projects/${id}/publish`, { published: !currentStatus });
       setProjects((prev) =>
         prev.map((p) => (p._id === id || p.id === id ? { ...p, published: !currentStatus } : p))
       );
@@ -50,7 +53,8 @@ export const Projects: React.FC = () => {
 
   const handleToggleFeatured = async (id: string, currentStatus: boolean) => {
     try {
-      await api.patch(`/api/projects/${id}/featured`, { featured: !currentStatus });
+      // Backend: PATCH /api/admin/projects/:id/featured (was missing -> 404)
+      await api.patch(`/api/admin/projects/${id}/featured`, { featured: !currentStatus });
       setProjects((prev) =>
         prev.map((p) => (p._id === id || p.id === id ? { ...p, featured: !currentStatus } : p))
       );
@@ -65,7 +69,8 @@ export const Projects: React.FC = () => {
     const targetId = projectToDelete._id || projectToDelete.id;
     setDeleting(true);
     try {
-      await api.delete(`/api/projects/${targetId}`);
+      // Backend: DELETE /api/admin/projects/:id
+      await api.delete(`/api/admin/projects/${targetId}`);
       setProjects((prev) => prev.filter((p) => (p._id || p.id) !== targetId));
       showToast('Project deleted successfully', 'success');
       setDeleteModalOpen(false);

@@ -76,6 +76,29 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Keep the form in sync when the parent loads project data asynchronously
+  // (Edit page fetches after mount). Without this, stale/empty values persist.
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        title: initialData.title || '',
+        slug: initialData.slug || '',
+        shortDescription: initialData.shortDescription || '',
+        description: initialData.description || '',
+        image: initialData.image || '',
+        technologies: initialData.technologies || [],
+        githubUrl: initialData.githubUrl || '',
+        liveUrl: initialData.liveUrl || '',
+        category: initialData.category || 'Full Stack',
+        featured: initialData.featured ?? false,
+        published: initialData.published ?? true,
+        accentColor: initialData.accentColor || '#06B6D4',
+      });
+      setPreviewUrl(initialData.image || '');
+      setSelectedFile(null);
+    }
+  }, [initialData]);
+
   // Auto-generate slug from title if not manually touched
   const handleTitleChange = (val: string) => {
     setFormData((prev) => {
