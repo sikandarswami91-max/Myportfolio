@@ -120,6 +120,43 @@ async function startServer() {
   app.use("/api/resume", resumeRoutes);
   app.use("/api", resumeRoutes);
 
+  // ── Global error handler (MUST be before Vite/static fallthrough) ──
+  // Multer file-filter / size-limit errors otherwise become a bare HTML 500.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    if (!err) return _next();
+    if (err.name === "MulterError") {
+      let message = "File upload failed.";
+      if (err.code === "LIMIT_FILE_SIZE") {
+        message = "Image file size must be less than 10MB (resume PDF less than 15MB).";
+      } else if (err.code === "LIMIT_UNEXPECTED_FILE") {
+        message = 'Unexpected file field. Use "image" for projects and "resume" for resume PDF.';
+      }
+      if (!res.headersSent) {
+        return res.status(400).json({ success: false, message });
+      }
+      return;
+    }
+    if (err instanceof Error && /Invalid (image file type|file type)/.test(err.message)) {
+      if (!res.headersSent) {
+        return res.status(400).json({ success: false, message: err.message });
+      }
+      return;
+    }
+    // Let Vite middleware / static handler deal with non-API errors; log API ones.
+    if (req.path.startsWith("/api")) {
+      console.error("Unhandled API error:", err);
+      if (!res.headersSent) {
+        return res.status(err?.statusCode === 400 ? 400 : 500).json({
+          success: false,
+          message: err?.message || "Internal server error.",
+        });
+      }
+      return;
+    }
+    _next(err);
+  });
+
   // Vite middleware for development vs static build in production
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

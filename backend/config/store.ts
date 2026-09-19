@@ -466,7 +466,24 @@ export const Repository = {
     if (dbStatus.isConnected) {
       try {
         return await (Project as any).create(projectData);
-      } catch (e) {
+      } catch (e: any) {
+        // Duplicate slug (E11000) is a USER error, not a 500 — surface it so
+        // the controller can return 400. Only validation/connection issues
+        // fall back to local store.
+        if (e?.code === 11000) {
+          const dupErr: any = new Error(
+            `A project with slug "${projectData?.slug}" already exists. Please choose a different title or slug.`
+          );
+          dupErr.statusCode = 400;
+          dupErr.isDuplicateSlug = true;
+          throw dupErr;
+        }
+        if (e?.name === 'ValidationError') {
+          const details = Object.values(e.errors || {}).map((v: any) => v.message).join(', ');
+          const valErr: any = new Error(details || 'Project validation failed.');
+          valErr.statusCode = 400;
+          throw valErr;
+        }
         console.log('ℹ️ Saving project to local persistent store.');
       }
     }

@@ -175,6 +175,14 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
 
     const finalSlug = customSlug && customSlug.trim() ? slugify(customSlug) : slugify(title);
 
+    if (!finalSlug) {
+      res.status(400).json({
+        success: false,
+        message: 'Could not generate a valid URL slug from the title. Please provide a valid title or custom slug.',
+      });
+      return;
+    }
+
     // Check slug uniqueness
     const existing = await Repository.getProjectBySlug(finalSlug);
     if (existing) {
@@ -235,7 +243,9 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
     });
   } catch (error: any) {
     console.error('Error creating project:', error);
-    res.status(500).json({
+    // User errors (duplicate slug / validation) must be 400, never 500
+    const status = error?.statusCode === 400 ? 400 : 500;
+    res.status(status).json({
       success: false,
       message: error.message || 'Failed to create project.',
     });

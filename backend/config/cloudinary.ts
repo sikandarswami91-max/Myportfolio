@@ -1,9 +1,12 @@
 import { v2 as cloudinary } from "cloudinary";
 
 const getCloudinaryConfig = () => {
-  const cloud_name = (process.env.CLOUDINARY_CLOUD_NAME || "").trim();
-  const api_key = (process.env.CLOUDINARY_API_KEY || "").trim();
-  const api_secret = (process.env.CLOUDINARY_API_SECRET || "").trim();
+  // Cloudinary cloud names are always lowercase — normalize "Portfolio" -> "portfolio"
+  // and trim accidental spaces/quotes copied from dashboards.
+  const rawName = (process.env.CLOUDINARY_CLOUD_NAME || "").trim().replace(/^["']|["']$/g, "");
+  const cloud_name = rawName.toLowerCase();
+  const api_key = (process.env.CLOUDINARY_API_KEY || "").trim().replace(/^["']|["']$/g, "");
+  const api_secret = (process.env.CLOUDINARY_API_SECRET || "").trim().replace(/^["']|["']$/g, "");
 
   return {
     cloud_name,
@@ -49,8 +52,9 @@ const ensureCloudinaryConfigured = (): boolean => {
 /**
  * Upload an image buffer to Cloudinary.
  *
- * If Cloudinary is not configured, a base64 Data URI is returned
- * so local development can continue without Cloudinary.
+ * If Cloudinary is not configured OR the upload fails (bad credentials,
+ * network, invalid cloud_name...), a base64 Data URI is returned so that
+ * project save NEVER fails with a 500 because of image hosting.
  */
 export const uploadImageToCloudinary = async (
   buffer: Buffer,
@@ -60,63 +64,80 @@ export const uploadImageToCloudinary = async (
   secure_url: string;
   public_id: string;
 }> => {
-  if (ensureCloudinaryConfigured()) {
-    return new Promise((resolve, reject) => {
-      const safeFilename = filename
-        .replace(/\.[^/.]+$/, "")
-        .replace(/[^a-zA-Z0-9_-]/g, "_");
-
-      const publicId = `${Date.now()}-${safeFilename}`;
-
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder,
-          resource_type: "image",
-          public_id: publicId,
-        },
-        (error, result) => {
-          if (error || !result) {
-            return reject(error || new Error("Cloudinary image upload failed"));
-          }
-
-          resolve({
-            secure_url: result.secure_url,
-            public_id: result.public_id,
-          });
-        },
+  const fallbackToBase64 = (reason?: unknown) => {
+    if (reason) {
+      console.warn(
+        "⚠️ Cloudinary image upload failed — saving project with local data-URI fallback instead of 500:",
+        reason instanceof Error ? reason.message : reason,
       );
+    }
+    const extension = filename.split(".").pop()?.toLowerCase() || "png";
 
-      uploadStream.end(buffer);
-    });
+    let mimeType = "image/png";
+
+    if (extension === "jpg" || extension === "jpeg") {
+      mimeType = "image/jpeg";
+    } else if (extension === "webp") {
+      mimeType = "image/webp";
+    } else if (extension === "gif") {
+      mimeType = "image/gif";
+    } else if (extension === "svg") {
+      mimeType = "image/svg+xml";
+    }
+
+    const base64 = `data:${mimeType};base64,${buffer.toString("base64")}`;
+
+    return {
+      secure_url: base64,
+      public_id: `fallback-${Date.now()}-${filename}`,
+    };
+  };
+
+  if (ensureCloudinaryConfigured()) {
+    try {
+      const result = await new Promise<{ secure_url: string; public_id: string }>((resolve, reject) => {
+        const safeFilename = filename
+          .replace(/\.[^/.]+$/, "")
+          .replace(/[^a-zA-Z0-9_-]/g, "_");
+
+        const publicId = `${Date.now()}-${safeFilename}`;
+
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder,
+            resource_type: "image",
+            public_id: publicId,
+          },
+          (error, result) => {
+            if (error || !result) {
+              return reject(error || new Error("Cloudinary image upload failed"));
+            }
+
+            resolve({
+              secure_url: result.secure_url,
+              public_id: result.public_id,
+            });
+          },
+        );
+
+        uploadStream.end(buffer);
+      });
+      return result;
+    } catch (err) {
+      // NEVER throw — fall through to local base64 so admin save succeeds.
+      return fallbackToBase64(err);
+    }
   }
 
   // Local development fallback
-  const extension = filename.split(".").pop()?.toLowerCase() || "png";
-
-  let mimeType = "image/png";
-
-  if (extension === "jpg" || extension === "jpeg") {
-    mimeType = "image/jpeg";
-  } else if (extension === "webp") {
-    mimeType = "image/webp";
-  } else if (extension === "gif") {
-    mimeType = "image/gif";
-  } else if (extension === "svg") {
-    mimeType = "image/svg+xml";
-  }
-
-  const base64 = `data:${mimeType};base64,${buffer.toString("base64")}`;
-
-  return {
-    secure_url: base64,
-    public_id: `fallback-${Date.now()}-${filename}`,
-  };
+  return fallbackToBase64();
 };
 
 /**
  * Upload a PDF buffer to Cloudinary.
  *
- * If Cloudinary is not configured, a base64 PDF Data URI is returned.
+ * If Cloudinary is not configured OR upload fails, a base64 PDF Data URI is
+ * returned so resume upload NEVER throws a 500.
  */
 export const uploadPDFToCloudinary = async (
   buffer: Buffer,
@@ -127,33 +148,41 @@ export const uploadPDFToCloudinary = async (
   public_id: string;
 }> => {
   if (ensureCloudinaryConfigured()) {
-    return new Promise((resolve, reject) => {
-      const safeFilename = filename
-        .replace(/\.[^/.]+$/, "")
-        .replace(/[^a-zA-Z0-9_-]/g, "_");
+    try {
+      const result = await new Promise<{ secure_url: string; public_id: string }>((resolve, reject) => {
+        const safeFilename = filename
+          .replace(/\.[^/.]+$/, "")
+          .replace(/[^a-zA-Z0-9_-]/g, "_");
 
-      const publicId = `resume-${Date.now()}-${safeFilename}`;
+        const publicId = `resume-${Date.now()}-${safeFilename}`;
 
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder,
-          resource_type: "raw",
-          public_id: publicId,
-        },
-        (error, result) => {
-          if (error || !result) {
-            return reject(error || new Error("Cloudinary PDF upload failed"));
-          }
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder,
+            resource_type: "raw",
+            public_id: publicId,
+          },
+          (error, result) => {
+            if (error || !result) {
+              return reject(error || new Error("Cloudinary PDF upload failed"));
+            }
 
-          resolve({
-            secure_url: result.secure_url,
-            public_id: result.public_id,
-          });
-        },
+            resolve({
+              secure_url: result.secure_url,
+              public_id: result.public_id,
+            });
+          },
+        );
+
+        uploadStream.end(buffer);
+      });
+      return result;
+    } catch (err) {
+      console.warn(
+        "⚠️ Cloudinary PDF upload failed — using local data-URI fallback:",
+        err instanceof Error ? err.message : err,
       );
-
-      uploadStream.end(buffer);
-    });
+    }
   }
 
   // Local development fallback
