@@ -1,6 +1,12 @@
+import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import { Repository } from '../config/store';
 import { uploadImageToCloudinary, deleteFromCloudinary } from '../config/cloudinary';
+
+export const isValidObjectId = (id: string): boolean => {
+  if (!id || typeof id !== 'string') return false;
+  return mongoose.isValidObjectId(id);
+};
 
 const slugify = (text: string): string => {
   return text
@@ -57,13 +63,67 @@ export const getAdminProjects = async (req: Request, res: Response): Promise<voi
   }
 };
 
-// ADMIN API: Get single project by ID
+// ADMIN API: Get single project by ID (accepts Mongo ObjectId, custom id, or slug)
 export const getAdminProjectById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const project = await Repository.getProjectById(id);
+    if (!id || !id.trim()) {
+      res.status(400).json({
+        success: false,
+        message: 'Project ID is required.',
+      });
+      return;
+    }
+    const project = await Repository.getProjectById(id.trim());
 
     if (!project) {
+      res.status(404).json({
+        success: false,
+        message: isValidObjectId(id)
+          ? 'Project not found.'
+          : 'Project not found. The provided ID is not a valid MongoDB ObjectId and no project matches this slug/custom id.',
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: project,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to retrieve project details.',
+    });
+  }
+};
+
+// PUBLIC API: Get a single published project by Mongo _id OR slug.
+// Used by the public "Project Details" page (/projects/:slug).
+export const getPublicProjectByIdOrSlug = async (req: Request, res: Response, next: any): Promise<void> => {
+  try {
+    const { id } = req.params;
+    // Guard: this router is ALSO mounted at /api (for /api/admin/... routes).
+    // A request like /api/resume or /api/health reaching this handler as
+    // "/:id = resume|health|auth..." must NOT be swallowed here — pass to next().
+    const reserved = new Set([
+      'health', 'auth', 'resume', 'admin', 'projects',
+      'active', 'upload', 'download', 'login', 'logout', 'me', 'status',
+      'forgot-password', 'reset-password',
+    ]);
+    if (!id || reserved.has(String(id).toLowerCase())) {
+      return next();
+    }
+    if (!id.trim()) {
+      res.status(400).json({
+        success: false,
+        message: 'Project identifier is required.',
+      });
+      return;
+    }
+    const project = await Repository.getProjectByIdOrSlug(id.trim());
+
+    if (!project || project.published === false) {
       res.status(404).json({
         success: false,
         message: 'Project not found.',
@@ -346,6 +406,43 @@ export const togglePublishProject = async (req: Request, res: Response): Promise
     res.status(500).json({
       success: false,
       message: 'Failed to toggle project publish status.',
+    });
+  }
+};
+
+// ADMIN API: Toggle or set featured status
+export const toggleFeaturedProject = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    if (!id || !id.trim()) {
+      res.status(400).json({
+        success: false,
+        message: 'Project ID is required.',
+      });
+      return;
+    }
+    const project = await Repository.getProjectById(id.trim());
+
+    if (!project) {
+      res.status(404).json({
+        success: false,
+        message: 'Project not found.',
+      });
+      return;
+    }
+
+    const newStatus = typeof req.body.featured === 'boolean' ? req.body.featured : !project.featured;
+    const updated = await Repository.updateProject(id.trim(), { featured: newStatus });
+
+    res.status(200).json({
+      success: true,
+      message: `Project ${newStatus ? 'marked as featured' : 'removed from featured'} successfully.`,
+      data: updated,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to toggle project featured status.',
     });
   }
 };

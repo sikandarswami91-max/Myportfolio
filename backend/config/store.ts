@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import { Project, IProject } from '../models/Project';
@@ -69,6 +70,9 @@ const loadLocalStore = () => {
   return false;
 };
 
+// Shared seed catalog — SINGLE SOURCE OF TRUTH for the 4 portfolio projects.
+// UI fallback (portfolioData.ts) and backend seed must never drift apart again:
+// the Admin dashboard shows exactly the same 4 projects the public UI shows.
 // Initial projects from portfolioData
 const INITIAL_PROJECTS = [
   {
@@ -221,6 +225,21 @@ export const initializeData = async () => {
         updatedAt: new Date(),
       });
       persistLocalStore();
+    }
+    // SELF-HEAL: older deployments persisted an EMPTY projects array, which
+    // blocks the seed below (loadLocalStore only fills non-empty arrays).
+    // If the store has zero projects, re-seed the 4 UI projects so the Admin
+    // dashboard shows exactly what the public UI shows — then they are editable.
+    if (inMemoryProjects.length === 0) {
+      inMemoryProjects = INITIAL_PROJECTS.map((p, idx) => ({
+        ...p,
+        _id: `project-${idx + 1}-${p.slug}`,
+        id: `project-${idx + 1}-${p.slug}`,
+        createdAt: new Date(Date.now() - idx * 86400000),
+        updatedAt: new Date(Date.now() - idx * 86400000),
+      }));
+      persistLocalStore();
+      console.log('✅ Empty project store detected — re-seeded 4 portfolio projects.');
     }
   }
 
@@ -383,15 +402,51 @@ export const Repository = {
   },
 
   async getProjectById(id: string) {
+    const cleanId = (id || '').trim();
     const dbStatus = getDBStatus();
     if (dbStatus.isConnected) {
       try {
-        return await (Project as any).findById(id);
+        // Only query Mongo by _id when the value is a valid ObjectId.
+        // An invalid value (e.g. a 22-char truncated id or a slug) would
+        // otherwise throw a Mongoose CastError and return a confusing 404.
+        if (cleanId && mongoose.isValidObjectId(cleanId)) {
+          const byId = await (Project as any).findById(cleanId);
+          if (byId) return byId;
+        }
+        // Fall back to slug / custom id lookup in Mongo.
+        if (cleanId) {
+          const bySlug = await (Project as any).findOne({ slug: cleanId });
+          if (bySlug) return bySlug;
+          const byCustomId = await (Project as any).findOne({
+            $or: [{ id: cleanId }, { _id: cleanId } as any],
+          }).catch(() => null);
+          if (byCustomId) return byCustomId;
+        }
+      } catch (e) {
+        // Continue to in-memory fallback
+      }
+    }
+    return inMemoryProjects.find((p) => p._id === cleanId || p.id === cleanId || p.slug === cleanId) || null;
+  },
+
+  async getProjectByIdOrSlug(idOrSlug: string) {
+    const clean = (idOrSlug || '').trim();
+    const dbStatus = getDBStatus();
+    if (dbStatus.isConnected) {
+      try {
+        if (clean && mongoose.isValidObjectId(clean)) {
+          const byId = await (Project as any).findById(clean);
+          if (byId) return byId;
+        }
+        if (clean) {
+          const bySlug = await (Project as any).findOne({ slug: clean });
+          if (bySlug) return bySlug;
+        }
       } catch (e) {
         // Continue to fallback
       }
     }
-    return inMemoryProjects.find((p) => p._id === id || p.id === id || p.slug === id) || null;
+    return inMemoryProjects.find((p) => p._id === clean || p.id === clean || p.slug === clean) || null;
   },
 
   async getProjectBySlug(slug: string) {
@@ -428,16 +483,28 @@ export const Repository = {
   },
 
   async updateProject(id: string, updateData: any) {
+    const cleanId = (id || '').trim();
     const dbStatus = getDBStatus();
     if (dbStatus.isConnected) {
       try {
-        const updated = await (Project as any).findByIdAndUpdate(id, { ...updateData, updatedAt: new Date() }, { new: true });
-        if (updated) return updated;
+        if (cleanId && mongoose.isValidObjectId(cleanId)) {
+          const updated = await (Project as any).findByIdAndUpdate(cleanId, { ...updateData, updatedAt: new Date() }, { new: true });
+          if (updated) return updated;
+        }
+        // Slug / custom-id based update (covers seeded local ids like project-1-slug)
+        if (cleanId) {
+          const updatedBySlug = await (Project as any).findOneAndUpdate(
+            { slug: cleanId },
+            { ...updateData, updatedAt: new Date() },
+            { new: true }
+          );
+          if (updatedBySlug) return updatedBySlug;
+        }
       } catch (e) {
         // Fallback
       }
     }
-    const index = inMemoryProjects.findIndex((p) => p._id === id || p.id === id);
+    const index = inMemoryProjects.findIndex((p) => p._id === cleanId || p.id === cleanId || p.slug === cleanId);
     if (index !== -1) {
       inMemoryProjects[index] = {
         ...inMemoryProjects[index],
@@ -451,16 +518,22 @@ export const Repository = {
   },
 
   async deleteProject(id: string) {
+    const cleanId = (id || '').trim();
     const dbStatus = getDBStatus();
     let deletedDoc: any = null;
     if (dbStatus.isConnected) {
       try {
-        deletedDoc = await (Project as any).findByIdAndDelete(id);
+        if (cleanId && mongoose.isValidObjectId(cleanId)) {
+          deletedDoc = await (Project as any).findByIdAndDelete(cleanId);
+        }
+        if (!deletedDoc && cleanId) {
+          deletedDoc = await (Project as any).findOneAndDelete({ slug: cleanId });
+        }
       } catch (e) {
         // Fallback
       }
     }
-    const index = inMemoryProjects.findIndex((p) => p._id === id || p.id === id);
+    const index = inMemoryProjects.findIndex((p) => p._id === cleanId || p.id === cleanId || p.slug === cleanId);
     if (index !== -1) {
       deletedDoc = inMemoryProjects[index];
       inMemoryProjects.splice(index, 1);
