@@ -461,9 +461,9 @@ export const toggleFeaturedProject = async (req: Request, res: Response): Promis
 export const getDashboardStats = async (req: Request, res: Response): Promise<void> => {
   try {
     const allProjects = await Repository.getAllProjects();
-    const published = allProjects.filter((p) => p.published).length;
-    const draft = allProjects.filter((p) => !p.published).length;
-    const featured = allProjects.filter((p) => p.featured).length;
+    const published = allProjects.filter((p: any) => p.published).length;
+    const draft = allProjects.filter((p: any) => !p.published).length;
+    const featured = allProjects.filter((p: any) => p.featured).length;
     const resume = await Repository.getLatestResume();
 
     res.status(200).json({
