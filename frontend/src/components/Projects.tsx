@@ -5,6 +5,7 @@ import { ExternalLink, Github, Sparkles, Eye, Check, ArrowRight } from 'lucide-r
 import { PROJECTS as DEFAULT_PROJECTS } from '../data/portfolioData';
 import { Project, ThemeMode } from '../types';
 import api from '../api/axios';
+import { resolveDemoUrl } from '../utils/demoUrl';
 
 interface ProjectsProps {
   theme: ThemeMode;
@@ -29,7 +30,8 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
             description: p.description || p.shortDescription,
             technologies: p.technologies || [],
             image: p.image || '',
-            liveUrl: p.liveUrl || 'https://demo.sikandar.dev',
+            liveUrl: p.liveUrl && p.liveUrl !== '#' ? p.liveUrl : '',
+            liveDemoUrl: p.liveDemoUrl || p.liveUrl || '',
             githubUrl: p.githubUrl || 'https://github.com/sikandarswami91-max',
             highlights: p.highlights && p.highlights.length > 0
               ? p.highlights
@@ -247,7 +249,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme, onSelectProject }) =>
                       </Link>
 
                       <a
-                        href={(project as any).liveDemoUrl || project.liveUrl || 'https://demo.sikandar.dev'}
+                        href={resolveDemoUrl(project)}
                         target="_blank"
                         rel="noreferrer"
                         className={`inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-medium border transition-colors ${

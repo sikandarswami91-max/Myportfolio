@@ -154,7 +154,7 @@ export const uploadPDFToCloudinary = async (
           .replace(/\.[^/.]+$/, "")
           .replace(/[^a-zA-Z0-9_-]/g, "_");
 
-        const publicId = `resume-${Date.now()}-${safeFilename}`;
+        const publicId = `resume-${Date.now()}-${safeFilename}.pdf`;
 
         const uploadStream = cloudinary.uploader.upload_stream(
           {

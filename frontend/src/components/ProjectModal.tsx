@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ExternalLink, Github, CheckCircle, Sparkles, Layers, Cpu, Database, Server } from 'lucide-react';
 import { Project, ThemeMode } from '../types';
+import { resolveDemoUrl } from '../utils/demoUrl';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -202,7 +203,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, th
               </a>
 
               <a
-                href={project.liveDemoUrl || '#'}
+                href={resolveDemoUrl(project)}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md hover:shadow-cyan-500/25 hover:opacity-95 transition-all"

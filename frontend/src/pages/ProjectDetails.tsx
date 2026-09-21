@@ -15,6 +15,7 @@ import {
 import { PROJECTS as DEFAULT_PROJECTS } from '../data/portfolioData';
 import { Project, ThemeMode } from '../types';
 import api from '../api/axios';
+import { resolveDemoUrl } from '../utils/demoUrl';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { ResumeModal } from '../components/ResumeModal';
@@ -143,9 +144,9 @@ export const ProjectDetails: React.FC = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-3 pt-2">
-            {project.liveUrl && (
+            {resolveDemoUrl(project) && (
               <a
-                href={project.liveUrl}
+                href={resolveDemoUrl(project)}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm shadow-md shadow-cyan-500/20 transition-all"

@@ -67,13 +67,21 @@ export const downloadResumeFile = async (req: Request, res: Response): Promise<v
       }
     }
 
-    // Local static file in public directory
-    const localPdfPath = path.join(process.cwd(), 'public', 'resume.pdf');
-    if (fs.existsSync(localPdfPath)) {
-      const stat = fs.statSync(localPdfPath);
-      setPdfHeaders(res, stat.size);
-      fs.createReadStream(localPdfPath).pipe(res);
-      return;
+    // Local static file candidates — check every plausible public folder so the
+    // ORIGINAL uploaded/default resume is always served before any generated one.
+    const localCandidates = [
+      path.join(process.cwd(), 'public', 'resume.pdf'),
+      path.join(process.cwd(), 'frontend', 'public', 'resume.pdf'),
+      path.join(process.cwd(), 'public', 'image', 'new resume.pdf'),
+      path.join(process.cwd(), 'frontend', 'public', 'image', 'new resume.pdf'),
+    ];
+    for (const localPdfPath of localCandidates) {
+      if (fs.existsSync(localPdfPath)) {
+        const stat = fs.statSync(localPdfPath);
+        setPdfHeaders(res, stat.size);
+        fs.createReadStream(localPdfPath).pipe(res);
+        return;
+      }
     }
 
     // No uploaded/default resume available — generate a genuine PDF on the fly.
